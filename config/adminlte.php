@@ -236,10 +236,15 @@ return [
             'search' => true,
             'topnav' => true,
         ],
+        // [
+        //     'text' => 'blog',
+        //     'url'  => 'admin/blog',
+        //     'can'  => 'manage-blog',
+        // ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text'        => 'Dashboard',
+            'url'         => 'admin/',
+            'icon'        => 'far fa-fw fa-file',
         ],
         [
             'text'        => 'pages',
@@ -420,6 +425,29 @@ return [
                 ],
             ],
         ],
+
+        'VectorMap'=>[
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/vectormap.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/vectormap.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/world.js',
+                ]
+            ],
+        ],
+
+        
     ],
 
     /*
