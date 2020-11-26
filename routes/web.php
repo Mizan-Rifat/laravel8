@@ -20,3 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+<<<<<<< HEAD
+=======
+
+
+Route::get('/products', [App\Http\Controllers\HomeController::class, 'product'])->name('product.index');
+>>>>>>> ffacbc3... permission-1

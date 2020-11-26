@@ -11,10 +11,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+   
 
     /**
      * Show the application dashboard.
@@ -25,4 +22,25 @@ class HomeController extends Controller
     {
         return view('home');
     }
+<<<<<<< HEAD
+=======
+
+    public function product(){
+        $actions = collect(['browse','create','read','update','delete']);
+        $tables = collect(['users','permissions','roles']);
+
+
+        $data = $tables->crossJoin($actions);
+
+      return  $data->map(function($item){
+            return [
+                'title'=>$item[1].'_'.$item[0],
+                'table_name'=>$item[0],
+            ];
+        });
+
+
+        return view('admin.product');
+    }
+>>>>>>> ffacbc3... permission-1
 }
