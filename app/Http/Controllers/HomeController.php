@@ -22,8 +22,6 @@ class HomeController extends Controller
     {
         return view('home');
     }
-<<<<<<< HEAD
-=======
 
     public function product(){
         $actions = collect(['browse','create','read','update','delete']);
@@ -42,5 +40,4 @@ class HomeController extends Controller
 
         return view('admin.product');
     }
->>>>>>> ffacbc3... permission-1
 }
