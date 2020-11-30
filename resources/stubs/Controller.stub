@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\{{modelName}};
+
+class {{modelName}}Controller extends Controller
+{
+    public function index()
+    {
+        ${{modelNamePluralLowerCase}} = {{modelName}}::all();
+
+        return view('admin.{{modelNamePluralLowerCase}}.index')->with('{{modelNamePluralLowerCase}}',${{modelNamePluralLowerCase}});
+    }
+
+    public function store(Request $request)
+    {
+        ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
+
+        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Created Successfully!');
+    }
+
+    public function show({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        return view('admin.{{modelNamePluralLowerCase}}.show')->with('{{modelNameSingularLowerCase}}',${{modelNameSingularLowerCase}});
+    }
+    
+    public function edit({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        return view('admin.{{modelNamePluralLowerCase}}.add-edit')->with('{{modelNameSingularLowerCase}}',${{modelNameSingularLowerCase}});
+    }
+
+    public function create()
+    {
+        return view('admin.{{modelNamePluralLowerCase}}.add-edit');
+    }
+
+    public function update(Request $request)
+    {
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($request->id);
+
+        ${{modelNameSingularLowerCase}}->update($request->all());
+
+        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Updated Successfully!');
+    }
+
+    public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        ${{modelNameSingularLowerCase}}->delete();
+
+        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Deleted Successfully!');
+
+    }
+
+
+    public function bulkDestroy(Request $request){
+
+        {{modelName}}::destroy($request->ids);
+        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Deleted Successfully!');
+    }
+}

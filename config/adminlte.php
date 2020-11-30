@@ -236,11 +236,6 @@ return [
             'search' => true,
             'topnav' => true,
         ],
-        // [
-        //     'text' => 'blog',
-        //     'url'  => 'admin/blog',
-        //     'can'  => 'manage-blog',
-        // ],
         [
             'text'        => 'Dashboard',
             'url'         => 'admin/',
@@ -253,6 +248,27 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
+
+
+
+
+        // ['header' => 'Roles'],
+        [
+            'text' => 'Roles',
+            'url'  => 'admin/roles',
+            'icon' => 'fas fa-user-lock',
+        ],
+        // ['header' => 'Category'],
+        [
+            'text' => 'Category',
+            'url'  => 'admin/category',
+            'icon' => 'fas fa-th',
+        ],
+
+
+
+
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -356,22 +372,23 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
+                
                 [
-                    'type' => 'js',
+                    'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'location' => '//cdn.datatables.net/1.10.22/css/jquery.dataTables.css',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'location' => '//cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/1.10.22/js/jquery.dataTables.js',
                 ],
             ],
         ],
@@ -401,12 +418,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@10',
                 ],
             ],
         ],
@@ -444,6 +461,23 @@ return [
                     'asset' => true,
                     'location' => 'js/world.js',
                 ]
+            ],
+        ],
+        'JqueriUI'=>[
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css',
+                    // 'location' => '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/1.10.22/css/dataTables.semanticui.min.css',
+                    // 'location' => '//cdn.datatables.net/1.10.22/css/dataTables.jqueryui.min.css',
+                ],
             ],
         ],
 

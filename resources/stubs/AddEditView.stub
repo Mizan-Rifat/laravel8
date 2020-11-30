@@ -1,0 +1,31 @@
+@extends('adminlte::page')
+
+@section('title', '{{modelNamePluralUcCase}}')
+
+@section('content_header')
+    <h1>{{modelNamePluralUcCase}}</h1>
+@stop
+
+@section('content')
+
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">{{isset(${{modelNameSingularlowerCase}}) ? 'Edit' : 'Add' }} {{modelNameSingularUcCase}}</h3>
+        </div>
+
+    </div>
+
+@endsection
+
+
+@section('css')
+
+@stop
+
+
+@section('js')
+<script>
+
+
+</script>
+@stop

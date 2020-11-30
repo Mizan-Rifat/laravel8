@@ -1,0 +1,38 @@
+@extends('adminlte::page')
+
+@section('title', '{{modelNamePluralUcCase}}')
+
+@section('content_header')
+    <h1>{{modelNamePluralUcCase}}</h1>
+
+    @php
+        $arg = ['{{modelNameSingularLowerCase}}'=>${{modelNameSingularLowerCase}}->id];
+    @endphp
+
+    <x-showActions 
+
+        indexroute='{{modelNamePluralLowerCase}}.index'
+        editroute='{{modelNamePluralLowerCase}}.edit'
+        destroyroute='{{modelNamePluralLowerCase}}.destroy'
+        :arg="$arg"
+
+    />
+@stop
+
+@section('content')
+
+    
+
+@endsection
+
+
+@section('css')
+@stop
+
+
+@section('js')
+<script>
+  
+
+</script>
+@stop

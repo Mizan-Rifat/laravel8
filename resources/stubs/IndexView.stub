@@ -1,0 +1,32 @@
+@extends('adminlte::page')
+
+@section('title', '{{modelNamePluralUcCase}}')
+
+@section('content_header')
+    <h1>{{modelNamePluralUcCase}}</h1>
+
+    <x-topAction route="{{modelNameSingularLowerCase}}.create" />
+    
+@stop
+
+@section('content')
+
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+
+
+@endsection
+
+
+@section('css')
+@stop
+
+
+@section('js')
+<script>
+    
+</script>
+@stop
