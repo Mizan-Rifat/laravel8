@@ -31,6 +31,8 @@
                     :value='$name'
                   />
 
+                  
+
 
                   @if(isset($category))
                     <input type="hidden" name='id' value="{{$category->id}}">
@@ -43,7 +45,7 @@
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-              </form>
+          </form>
 
     </div>
 

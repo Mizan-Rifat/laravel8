@@ -91,6 +91,18 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\CategoryController::class, 'bulkdestroy'])->name('category.bulkdestroy');
     });
+
+    Route::group(['prefix'=>'product'],function(){
+        Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('product.index');
+        
+        Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('product.create');
+        Route::get('/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
+        Route::get('/edit/{product}', [App\Http\Controllers\ProductController::class, 'edit'])->name('product.edit');
+        Route::get('/destroy/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
+        Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
+        Route::post('/update', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\ProductController::class, 'bulkdestroy'])->name('product.bulkdestroy');
+    });
     
 });
 

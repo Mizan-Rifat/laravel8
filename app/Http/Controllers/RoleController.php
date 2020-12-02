@@ -19,6 +19,7 @@ class RoleController extends Controller
 
 
     public function show(Role $role){
+        
         return view('admin.roles.show')->with('role',$role);
     }
 

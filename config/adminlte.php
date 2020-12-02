@@ -264,6 +264,11 @@ return [
             'url'  => 'admin/category',
             'icon' => 'fas fa-th',
         ],
+        [
+            'text' => 'Product',
+            'url'  => 'admin/product',
+            'icon' => 'fas fa-th',
+        ],
 
 
 
@@ -463,6 +468,22 @@ return [
                 ]
             ],
         ],
+
+        'ImageUpload'=>[
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/image-uploader.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/image-uploader.js',
+                ],
+            ],
+        ],
         'JqueriUI'=>[
             'active' => false,
             'files' => [
@@ -477,6 +498,21 @@ return [
                     'asset' => false,
                     'location' => '//cdn.datatables.net/1.10.22/css/dataTables.semanticui.min.css',
                     // 'location' => '//cdn.datatables.net/1.10.22/css/dataTables.jqueryui.min.css',
+                ],
+            ],
+        ],
+        'SummerNote'=>[
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js',
                 ],
             ],
         ],
