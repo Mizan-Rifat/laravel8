@@ -5,9 +5,15 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+
+use Akaunting\Money\Money;
+use Akaunting\Money\Currency;
+use App\Models\Currency as ModelsCurrency;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,9 +66,15 @@ Route::post('/test', function (Request $request) {
 
 
 Route::get('/test', function () {
+
+    return money(100,'BDT',true)->convert(new Currency('GBP'),.5)->format();
+
+    return ModelsCurrency::all();
     
-return config('datatypes.roles');
-    
+    $amountA = new Money(150, new Currency('BDT'), true); // $150.00 US dollars
+
+    return $amountA->format();
+    echo $amountB = $amountA->convert(new Currency('GBP'),.5); // £111.12 British pounds
 
 });
 
@@ -103,11 +115,33 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('/update', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\ProductController::class, 'bulkdestroy'])->name('product.bulkdestroy');
     });
+
+    
+    Route::group(['prefix'=>'ingredient'],function(){
+        Route::get('/', [App\Http\Controllers\IngredientController::class, 'index'])->name('ingredient.index');
+        Route::get('/create', [App\Http\Controllers\IngredientController::class, 'create'])->name('ingredient.create');
+        Route::get('/{ingredient}', [App\Http\Controllers\IngredientController::class, 'show'])->name('ingredient.show');
+        Route::get('/edit/{ingredient}', [App\Http\Controllers\IngredientController::class, 'edit'])->name('ingredient.edit');
+        Route::get('/destroy/{ingredient}', [App\Http\Controllers\IngredientController::class, 'destroy'])->name('ingredient.destroy');
+        Route::post('/store', [App\Http\Controllers\IngredientController::class, 'store'])->name('ingredient.store');
+        Route::post('/update', [App\Http\Controllers\IngredientController::class, 'update'])->name('ingredient.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\IngredientController::class, 'bulkdestroy'])->name('ingredient.bulkdestroy');
+    });
+
+    Route::group(['prefix'=>'addableitem'],function(){
+        Route::get('/', [App\Http\Controllers\AddableItemController::class, 'index'])->name('addableitem.index');
+        Route::get('/create', [App\Http\Controllers\AddableItemController::class, 'create'])->name('addableitem.create');
+        Route::get('/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'show'])->name('addableitem.show');
+        Route::get('/edit/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'edit'])->name('addableitem.edit');
+        Route::get('/destroy/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'destroy'])->name('addableitem.destroy');
+        Route::post('/store', [App\Http\Controllers\AddableItemController::class, 'store'])->name('addableitem.store');
+        Route::post('/update', [App\Http\Controllers\AddableItemController::class, 'update'])->name('addableitem.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\AddableItemController::class, 'bulkdestroy'])->name('addableitem.bulkdestroy');
+    });
     
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 
 

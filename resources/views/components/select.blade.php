@@ -1,3 +1,4 @@
+
 <div class="form-group">
     <label>{{$label}}</label>
         <select class="form-control select2" style="width: 100%;" name="{{$name}}">

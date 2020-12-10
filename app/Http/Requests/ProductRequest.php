@@ -22,7 +22,7 @@ class ProductRequest extends FormRequest
         'name' => ['string'],
         'category' => ['integer','exists:categories,id'],
         'description'=>['nullable'],
-        'price'=>['regex:/^\d+(\.\d{1,2})?$/'],
+        'price'=>['regex:/^\d+(\.\d{1,4})?$/'],
         'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
     ];
 

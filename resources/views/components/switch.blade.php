@@ -1,5 +1,14 @@
-<div class="custom-control custom-switch" id='switchContainer'>
-  <input type="checkbox" class="custom-control-input" id="customSwitch1" name="{{$name}}" checked>
+
+<div class="custom-control custom-switch form-group" id='switchContainer'>
+  <input 
+    type="checkbox" 
+    class="custom-control-input" 
+    id="customSwitch1" 
+    name="{{$name}}" 
+    @if($value == 'Yes')
+    checked
+    @endif
+  >
   <label class="custom-control-label" id='custom-control-label' for="customSwitch1">{{$label}}</label>
 
   @if ($errors->has($name))

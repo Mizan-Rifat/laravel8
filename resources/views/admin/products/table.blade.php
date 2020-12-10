@@ -1,10 +1,6 @@
 @php
 
-$roleFields = config('datatypes.products')['fields'];
-
-$catName = "category";
-$catame = "name";
-
+$allFields = config('datatypes.products')['fields'];
 
 @endphp
 
@@ -22,7 +18,7 @@ $catame = "name";
                           <input type="checkbox" id="bulkSelect">
                       </th>
 
-                      @foreach($roleFields as $field)
+                      @foreach($allFields as $field)
 
 
                         <th>
@@ -46,31 +42,29 @@ $catame = "name";
                         <input type="checkbox" name="ids[]" class="checkboxes" value="{{$product->id}}">
                       </td>
 
-                      <td>
-                        {{$product->name}}
-                      </td>
-                      <td>
-                        {{ $product->$catName->$catame }}
-                      </td>
-                      <td>
-                        @php
-                          $images = json_decode($product->image);
-                        @endphp
 
-                        @foreach($images as $image)
-                          <img src="{{ asset($image) }}" alt="" style="width:80px">
-                        @endforeach
-                      </td>
-                      <td>
-                        {{$product->description}}
-                      </td>
-                      <td>
-                        {{$product->price}}
-                      </td>
-                      <td>
-                        {{$product->active}}
-                      </td>
-              
+                      @foreach($allFields as $field)
+
+                        @if($field['type'] == 'image')
+                            <td>
+                              <img src="{{ asset(json_decode( $product->{$field['field']} )[0] ) }}" alt="" style="width:80px">
+                            </td>
+
+                        @elseif($field['type'] == 'select')
+                            <td>
+                              {{ $product->{$field['field']}->{$field['relationship_field']} }}
+                            </td>
+                        @elseif($field['type'] == 'text-area')
+                            <td>
+                              {!! $product->{$field['field']} !!}
+                            </td>
+                        @else
+                          <td>
+                            {{ $product->{$field['field']} }}
+                          </td>
+                        @endif
+
+                      @endforeach              
 
                       @php
                         $arg = ['product'=>$product->id];

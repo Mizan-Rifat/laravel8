@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
             $table->longText('image')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price',12,4)->nullable();
+            $table->string('price_currency')->default('BDT');
             $table->unsignedinteger('active')->nullable();
             $table->timestamps();
         });

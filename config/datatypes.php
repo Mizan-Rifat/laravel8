@@ -20,37 +20,98 @@ return [
             
         ],
     ],
+    'ingredients'=>[
+        'fields'=>[
+            [
+                'label'=>'Name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
+                'type'=>'text'
+            ],
+            
+        ],
+    ],
+    'addable_items'=>[
+        'fields'=>[
+            [
+                'label'=>'Name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
+                'type'=>'text'
+            ],
+            [
+                'label'=>'Image',
+                'column'=>'image',
+                'field'=>'image',
+                'edit_field'=>'image',
+                'type'=>'image'
+            ],
+            [
+                'label'=>'Price',
+                'column'=>'price',
+                'field'=>'formatted_price',
+                'edit_field'=>'price',
+                'type'=>'text'
+            ],
+            
+        ],
+    ],
 
     'products'=>[
         'fields'=>[
             [
                 'label'=>'Name',
-                'title'=>'name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
                 'type'=>'text'
             ],
             [
                 'label'=>'Category',
-                'title'=>'category',
-                'type'=>'select'
+                'column'=>'category',
+                'field'=>'category',
+                'edit_field'=>'category',
+                'type'=>'select',
+                'relationship_field'=>'name',
+                
+            ],
+            [
+                'label'=>'Ingredients',
+                'column'=>'ingredient',
+                'field'=>'ingredients',
+                'edit_field'=>'ingredients',
+                'type'=>'multi-select',
+                'relationship_field'=>'name',
+                
             ],
             [
                 'label'=>'Image',
-                'title'=>'image',
+                'column'=>'image',
+                'field'=>'image',
+                'edit_field'=>'image',
                 'type'=>'image'
             ],
             [
                 'label'=>'Description',
-                'title'=>'description',
+                'column'=>'description',
+                'field'=>'description',
+                'edit_field'=>'description',
                 'type'=>'text-area'
             ],
             [
                 'label'=>'Price',
-                'title'=>'price',
+                'column'=>'price',
+                'field'=>'formatted_price',
+                'edit_field'=>'price',
                 'type'=>'text'
             ],
             [
                 'label'=>'Active',
-                'title'=>'active',
+                'column'=>'active',
+                'field'=>'active',
+                'edit_field'=>'active',
                 'type'=>'switch'
             ],
         ]

@@ -7,6 +7,14 @@
 
 @section('content_header')
     <h1>Products</h1>
+
+    <div class="mt-3 text-right">
+        <a class="btn btn-warning m-1" href="{{ route( 'product.index' ) }}">
+            <i class="fas fa-list">
+            </i>
+            Back To List
+        </a>
+    </div>
 @stop
 
 @php
@@ -20,17 +28,14 @@
         if($field['type'] == 'image'){
             $field['value'] = isset($product) ? json_decode($product->image) : [];
         }else{
-            $field['value'] = isset($product) ? $product->{$field['title']} : false;
+            $field['value'] = isset($product) ? $product->{$field['edit_field']} : false;
 
         }
        
        array_push($fields,$field);
 
-
-       
     }
-
-
+    dd($fields);
 @endphp
 
 @section('content')
@@ -57,12 +62,13 @@
                         $label = $field['label'];
                         $type = $field['type'];
                         $value = $field['value'];
+                        $column = $field['column'];
                     @endphp
 
                     @if($field['type'] == 'text')
                         <x-input 
                             :label='$label' 
-                            :name='strtolower($label)' 
+                            :name='$column' 
                             :placeholder='$label' 
                             :value='$value'  
                         />
@@ -73,7 +79,7 @@
                         <x-select 
                             :label='$label'
                             :options='$categories'
-                            :name='strtolower($label)'
+                            :name='$column'
                             :value='$value'  
                         />
 
@@ -82,7 +88,7 @@
                     @if($field['type'] == 'text-area')
                         <x-editor
                             :label='$label'
-                            :name='strtolower($label)' 
+                            :name='$column' 
                             :value='$value'  
                         />
 
@@ -91,7 +97,7 @@
                     @if($field['type'] == 'switch')
                         <x-switch
                             :label='$label'
-                            :name='strtolower($label)' 
+                            :name='$column' 
                             :value='$value'  
                         />
 
@@ -109,14 +115,24 @@
 
                     @endif
 
+                    @if($field['type'] == 'multi-select')
+                        <x-multiSelect 
+                            :label='$label'
+                            :options='$ingredients'
+                            :name='$column'
+                            :value='$value'  
+                        />
+
+                    @endif
+
 
 
                 @endforeach
 
 
-                <x-gallery 
-                    ':images'=
-                />
+           
+
+    
 
 
             
@@ -150,7 +166,6 @@
 @section('css')
 
 @stop
-
 
 @section('js')
 <script>
