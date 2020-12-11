@@ -70,19 +70,28 @@ return [
             ],
             [
                 'label'=>'Category',
-                'column'=>'category',
+                'column'=>'category_id',
                 'field'=>'category',
-                'edit_field'=>'category',
-                'type'=>'select',
+                'edit_field'=>'categories',
+                'type'=>'relationship-select',
                 'relationship_field'=>'name',
                 
             ],
             [
                 'label'=>'Ingredients',
-                'column'=>'ingredient',
+                'column'=>'ingredients',
                 'field'=>'ingredients',
                 'edit_field'=>'ingredients',
-                'type'=>'multi-select',
+                'type'=>'relationship-multi-select',
+                'relationship_field'=>'name',
+                
+            ],
+            [
+                'label'=>'Addable Items',
+                'column'=>'addableItems',
+                'field'=>'addableItems',
+                'edit_field'=>'addableItems',
+                'type'=>'relationship-multi-select',
                 'relationship_field'=>'name',
                 
             ],

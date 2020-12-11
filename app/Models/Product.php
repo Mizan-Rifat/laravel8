@@ -20,10 +20,13 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
-
     
     public function ingredients(){
         return $this->belongsToMany(Ingredient::class,'products_ingredients');
+    }
+
+    public function addableItems(){
+        return $this->belongsToMany(AddableItem::class,'products_addable_items');
     }
 
     public function getActiveAttribute($value){

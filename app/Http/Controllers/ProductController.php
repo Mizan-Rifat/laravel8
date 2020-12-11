@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\AddableItem;
 use App\Models\Category;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
@@ -21,7 +22,6 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        
 
         $images = [];
         if($files=$request->file('images')){
@@ -33,12 +33,15 @@ class ProductController extends Controller
 
         $product = Product::create([
             'name'=>$request->name,
-            'category_id'=>$request->category,
+            'category_id'=>$request->category_id,
             'description'=>$request->description,
             'price'=>$request->price,
             'active'=>$request->active == 'on' ? 1 : 0,
             'image'=>json_encode($images),
         ]);
+
+        $product->ingredients()->sync($request->ingredients);
+        $product->addableItems()->sync($request->addableItems);
 
         return redirect()->route('product.index')->with('message', 'Created Successfully!');
     }
@@ -55,29 +58,36 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
 
-        $product->load('ingredients');
-
+        $product->load('category','ingredients','addableItems');
+    
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
-        
+        $addableItems = AddableItem::all();
+  
         return view('admin.products.add-edit',compact(
             'product',
             'categories',
             'ingredients',
+            'addableItems',
+
         ));
     }
 
     public function create()
     {
         $categories = Category::get(['id','name']);
+        $ingredients = Ingredient::get(['id','name']);
+        $addableItems = AddableItem::all();
+
         return view('admin.products.add-edit',compact(
-            'categories'
+            'categories',
+            'ingredients',
+            'addableItems',
         ));
     }
 
     public function update(ProductRequest $request)
     {
-
 
         $product = Product::findOrFail($request->id);
 
@@ -91,11 +101,12 @@ class ProductController extends Controller
             }
         }
 
-        $product->ingredients()->sync($request->ingredient);
+        $product->ingredients()->sync($request->ingredients);
+        $product->addableItems()->sync($request->addableItems);
 
         $product->update([
             'name'=>$request->name,
-            'category_id'=>$request->category,
+            'category_id'=>$request->category_id,
             'description'=>$request->description,
             'price'=>$request->price,
             'active'=>$request->active == 'on' ? 1 : 0,

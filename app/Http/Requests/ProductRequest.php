@@ -10,17 +10,24 @@ class ProductRequest extends FormRequest
 
     private $storeRules = [
         'name' => ['required','string'],
-        'category' => ['required','integer','exists:categories,id'],
+        'category_id' => ['required','integer','exists:categories,id'],
+        'ingredients' => ['array'],
+        'ingredients.*' => ['numeric','exists:ingredients,id'],
+        'addableItems' => ['array'],
+        'addableItems.*' => ['numeric','exists:addable_items,id'],
         'description'=>['nullable'],
         'price'=>['required','regex:/^\d+(\.\d{1,2})?$/'],
-        'active'=>['required'],
         'images' => 'required',
         'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
     ];
 
     private $updateRules = [
         'name' => ['string'],
-        'category' => ['integer','exists:categories,id'],
+        'category_id' => ['integer','exists:categories,id'],
+        'ingredients' => ['array'],
+        'ingredients.*' => ['numeric','exists:ingredients,id'],
+        'addableItems' => ['array'],
+        'addableItems.*' => ['numeric','exists:addable_items,id'],
         'description'=>['nullable'],
         'price'=>['regex:/^\d+(\.\d{1,4})?$/'],
         'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -34,5 +41,12 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return Route::currentRouteName() == 'product.store' ? $this->storeRules : $this->updateRules;
+    }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'The category field is required.',
+        ];
     }
 }

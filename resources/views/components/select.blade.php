@@ -1,12 +1,27 @@
 
 <div class="form-group">
     <label>{{$label}}</label>
-        <select class="form-control select2" style="width: 100%;" name="{{$name}}">
+        <select 
+            class="form-control select2" 
+            style="width: 100%;" 
+            name="{{$name}}"
+            data-placeholder="Select a {{$label}}"
+        >
+
+            <option value=""></option>
 
             @foreach($options as $option)
 
-                <option value="{{$option->id}}">{{$option->name}}</option>
+                <option 
+                    value="{{$option->id}}"
+                    @if( $option->id == $value)
+                    selected='selected'
+                    @endif
 
+                >
+                    {{$option->name}}
+                </option>
+                
             @endforeach
             
         </select>
