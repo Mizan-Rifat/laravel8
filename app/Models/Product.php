@@ -14,7 +14,7 @@ class Product extends Model
 
     protected $guarded = ['id'];
 
-    protected $appends = ['formatted_price'];
+    // protected $appends = ['formatted_price'];
 
 
     public function category(){
@@ -24,6 +24,10 @@ class Product extends Model
     
     public function ingredients(){
         return $this->belongsToMany(Ingredient::class,'products_ingredients');
+    }
+
+    public function addableItems(){
+        return $this->belongsToMany(AddableItem::class,'products_addable_items');
     }
 
     public function getActiveAttribute($value){

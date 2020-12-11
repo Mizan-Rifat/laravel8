@@ -1,4 +1,3 @@
-{{ dd($value) }}
 
 <div class="form-group">
     <label>{{ $label }}</label>
@@ -10,7 +9,14 @@
         style="width: 100%;"
     >
         @foreach($options as $option)
-            <option value="{{$option->id}}">{{$option->name}}</option>
+            <option 
+                value="{{$option->id}}"
+                @if( in_array($option->id,$value) )
+                selected='selected'
+                @endif
+            >
+                {{$option->name}}
+            </option>
         @endforeach
 
     </select>

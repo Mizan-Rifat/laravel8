@@ -5,7 +5,14 @@
 
             @foreach($options as $option)
 
-                <option value="{{$option->id}}">{{$option->name}}</option>
+                <option 
+                    value="{{$option['id']}}"
+                    @if(  $option['id'] == $value )
+                        selected='selected'
+                    @endif
+                >
+                    {{$option['name']}}
+                </option>
 
             @endforeach
             

@@ -67,14 +67,16 @@ Route::post('/test', function (Request $request) {
 
 Route::get('/test', function () {
 
-    return money(100,'BDT',true)->convert(new Currency('GBP'),.5)->format();
+    $array = [
+        0=>14,
+        1=>2
+    ];
 
-    return ModelsCurrency::all();
-    
-    $amountA = new Money(150, new Currency('BDT'), true); // $150.00 US dollars
-
-    return $amountA->format();
-    echo $amountB = $amountA->convert(new Currency('GBP'),.5); // £111.12 British pounds
+    if(in_array(1,$array)){
+        return 't';
+    }else{
+        return 'f';
+    }
 
 });
 

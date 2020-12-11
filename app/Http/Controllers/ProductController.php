@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\AddableItem;
 use App\Models\Category;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
@@ -59,11 +60,13 @@ class ProductController extends Controller
 
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
-        
+        $addableItems = AddableItem::all();
+
         return view('admin.products.add-edit',compact(
             'product',
             'categories',
             'ingredients',
+            'addableItems',
         ));
     }
 
@@ -91,13 +94,15 @@ class ProductController extends Controller
             }
         }
 
-        $product->ingredients()->sync($request->ingredient);
+        $product->ingredients()->sync($request->ingredients);
+        $product->addableItems()->sync($request->addableItems);
 
         $product->update([
             'name'=>$request->name,
             'category_id'=>$request->category,
             'description'=>$request->description,
             'price'=>$request->price,
+            'price_currency'=>$request->price_currency,
             'active'=>$request->active == 'on' ? 1 : 0,
             'image'=>json_encode($productImages),
         ]);

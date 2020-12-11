@@ -264,9 +264,21 @@ return [
             'url'  => 'admin/category',
             'icon' => 'fas fa-th',
         ],
+
+        ['header' => 'Product'],
         [
             'text' => 'Product',
             'url'  => 'admin/product',
+            'icon' => 'fas fa-th',
+        ],
+        [
+            'text' => 'Ingredient',
+            'url'  => 'admin/ingredient',
+            'icon' => 'fas fa-th',
+        ],
+        [
+            'text' => 'Addable Items',
+            'url'  => 'admin/addableitem',
             'icon' => 'fas fa-th',
         ],
 

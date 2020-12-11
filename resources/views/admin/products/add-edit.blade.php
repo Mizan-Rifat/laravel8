@@ -1,4 +1,19 @@
 @extends('adminlte::page')
+@php
+
+ $currency_options = [];
+
+
+ foreach(config('settings.currencies') as $key => $currency){
+     array_push($currency_options,[
+        'id'=>$key,
+        'name'=>$currency['name']
+    ]);
+ }
+
+
+
+@endphp
 
 @section('title', 'Products')
 
@@ -16,27 +31,6 @@
         </a>
     </div>
 @stop
-
-@php
-
-    $allFields = config('datatypes.products')['fields'];
-
-
-    $fields = [];
-
-    foreach($allFields as $field){
-        if($field['type'] == 'image'){
-            $field['value'] = isset($product) ? json_decode($product->image) : [];
-        }else{
-            $field['value'] = isset($product) ? $product->{$field['edit_field']} : false;
-
-        }
-       
-       array_push($fields,$field);
-
-    }
-    dd($fields);
-@endphp
 
 @section('content')
 
@@ -56,87 +50,68 @@
             @csrf
             <div class="card-body">
 
-                @foreach($fields as $field)
+                <x-input 
+                    label='Name' 
+                    name='name' 
+                    placeholder='Name' 
+                    :value='$product->name'  
+                />
 
-                    @php
-                        $label = $field['label'];
-                        $type = $field['type'];
-                        $value = $field['value'];
-                        $column = $field['column'];
-                    @endphp
+                <x-select 
+                    label='Category'
+                    name='category_id'
+                    :options='$categories'
+                    :value='$product->category_id'
+                />
+                <x-multiSelect 
+                    label='Ingredients'
+                    name='ingredients'
+                    :options='$ingredients'
+                    :value="$product->ingredients->pluck('id')->toArray()"
+                />
+                <x-multiSelect 
+                    label='Addable Items'
+                    name='addableItems'
+                    :options='$addableItems'
+                    :value="$product->addableItems != null ? $product->addableItems->pluck('id')->toArray() : []"
+                   
+                />
 
-                    @if($field['type'] == 'text')
-                        <x-input 
-                            :label='$label' 
-                            :name='$column' 
-                            :placeholder='$label' 
-                            :value='$value'  
-                        />
+                <x-gallery 
+                    :images='json_decode($product->image)'
+                    label='Image'
+                />
+                <x-imageUploader
+                    label='Upload Image'
+                />
 
-                    @endif
+                <x-editor
+                    label='Description' 
+                    name='description' 
+                    placeholder='Description' 
+                    :value='$product->description'  
+                />
 
-                    @if($field['type'] == 'select')
-                        <x-select 
-                            :label='$label'
-                            :options='$categories'
-                            :name='$column'
-                            :value='$value'  
-                        />
+                <x-input 
+                    label='Price' 
+                    name='price' 
+                    placeholder='Price' 
+                    :value='$product->price'  
+                />
+                <x-select 
+                    label='Price Currency'
+                    name='price_currency'
+                    :options='$currency_options'
+                    :value='$product->price_currency'
+                />
+             
 
-                    @endif
+                <x-switch
+                    label='Active'
+                    name='active'
+                    :value='$product->active'
 
-                    @if($field['type'] == 'text-area')
-                        <x-editor
-                            :label='$label'
-                            :name='$column' 
-                            :value='$value'  
-                        />
-
-                    @endif
-
-                    @if($field['type'] == 'switch')
-                        <x-switch
-                            :label='$label'
-                            :name='$column' 
-                            :value='$value'  
-                        />
-
-                    @endif
-
-                    @if($field['type'] == 'image')
-                        <x-gallery 
-                            :images='$value'
-                            :label='$label'
-                        />
-                        <x-imageUploader
-                            label='Upload Image'
-                            :value='$value'  
-                        />
-
-                    @endif
-
-                    @if($field['type'] == 'multi-select')
-                        <x-multiSelect 
-                            :label='$label'
-                            :options='$ingredients'
-                            :name='$column'
-                            :value='$value'  
-                        />
-
-                    @endif
-
-
-
-                @endforeach
-
-
-           
-
-    
-
-
-            
-                
+                />
                 
 
 
