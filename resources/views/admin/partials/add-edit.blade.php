@@ -5,7 +5,7 @@ $fields = [];
 
 foreach($allFields as $field){
     if($field['type'] == 'image'){
-        $field['value'] = isset($data) ? json_decode($data->image) : [];
+        $field['value'] = isset($data) && $data->image != null ? json_decode($data->image) : [];
 
     }
     elseif($field['type'] == 'relationship-select'){
@@ -25,18 +25,20 @@ foreach($allFields as $field){
     array_push($fields,$field);
 
 }
+
 @endphp
 
-@section('title', Str::ucfirst( Str::plural($dataType) ))
+@section('title', pluralTitle($dataType))
 
 @section('plugins.Select2', true)
 @section('plugins.SummerNote', true)
 
 @section('content_header')
-<h1>{{ Str::ucfirst( Str::plural($dataType) ) }}</h1>
+<h1>{{ pluralTitle($dataType) }}</h1>
+
 
 <div class="mt-3 text-right">
-    <a class="btn btn-warning m-1" href="{{ route( Str::lower($dataType).'.index' ) }}">
+    <a class="btn btn-warning m-1" href="{{ route( get_route($dataType,'index')) }}">
         <i class="fas fa-list">
         </i>
         Back To List
@@ -54,12 +56,12 @@ foreach($allFields as $field){
 
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">{{isset($data) ? 'Edit' : 'Add' }} {{ Str::ucfirst($dataType) }} </h3>
+        <h3 class="card-title">{{isset($data) ? 'Edit' : 'Add' }} {{ singularTitle($dataType) }} </h3>
     </div>
 
     <form 
         method="post" 
-        action="{{ isset($data) ? route(Str::lower($dataType).'.update') : route(Str::lower($dataType).'.store')}}" 
+        action="{{ isset($data) ? route(get_route($dataType,'update')) : route(get_route($dataType,'store'))}}" 
         role="form"
         enctype="multipart/form-data"
     >
@@ -126,13 +128,23 @@ foreach($allFields as $field){
                 @endif
 
                 @if($field['type'] == 'image')
-                    <x-gallery 
-                        :images='$value'
-                        :label='$label'
-                    />
+
+                   
+
+                    @if(isset($data))
+                        @php
+                            $arg = [$dataType=>$data->id];
+                        @endphp
+                        <x-gallery 
+                            :images='$value'
+                            :label='$label'
+                            :removeRoute="get_route($dataType,'removeimage')"
+                            :arg="$arg"
+                        />
+                    @endif
                     <x-imageUploader
                         label='Upload Image'
-                        :value='$value'  
+                        :images='$value' 
                     />
 
                 @endif

@@ -3,6 +3,7 @@
 return [
 
     'currency' => 'BDT',
+    'default_product_image'=>"images\/products\/default.svg",
     'currencies' => [
         'BDT' => [
             'name'                => 'Taka',

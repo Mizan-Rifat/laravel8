@@ -1,11 +1,21 @@
 @extends('adminlte::page')
 
-@section('title', 'Products')
+@php
+
+    $dataType = 'product';
+
+    $data = $products;
+
+    $allFields = config('datatypes.products')['fields'];
+
+@endphp
+
+@section('title', pluralTitle($dataType))
 
 @section('content_header')
-    <h1>Products</h1>
+    <h1>{{ pluralTitle($dataType) }}</h1>
 
-    <x-topAction route="product.create" />
+    <x-topAction :route="get_route('product','create')" />
     
 @stop
 
@@ -17,13 +27,7 @@
         </div>
     @endif
 
-
-<x-confirm 
-    text='Are you sure to delete the file?'
-    type='delete'
-
-/>
-@include('admin.products.table')
+@include('admin.partials.table')
 
 @endsection
 

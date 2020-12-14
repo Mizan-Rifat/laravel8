@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Akaunting\Money\Money;
 use Akaunting\Money\Currency;
 use App\Models\Currency as ModelsCurrency;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,14 +68,11 @@ Route::post('/test', function (Request $request) {
 
 Route::get('/test', function () {
 
-    return money(100,'BDT',true)->convert(new Currency('GBP'),.5)->format();
+    $str  = 'images/products/CQ0zyeV3E2uwRKFCVpBHwyCtc3Fre2FJFt5PEjkS.jpg';
 
-    return ModelsCurrency::all();
-    
-    $amountA = new Money(150, new Currency('BDT'), true); // $150.00 US dollars
+    return str_replace("images/","",$str);
 
-    return $amountA->format();
-    echo $amountB = $amountA->convert(new Currency('GBP'),.5); // £111.12 British pounds
+    Storage::delete("products/zcBCZIcrVkRCusAOn8MEvFaQfJ195Jqi7hIDLkyu.jpg");
 
 });
 
@@ -94,49 +92,50 @@ Route::group(['prefix'=>'admin'],function(){
 
 
     Route::group(['prefix'=>'category'],function(){
-        Route::get('/', [App\Http\Controllers\CategoryController::class, 'index'])->name('category.index');
-        Route::get('/show/{category}', [App\Http\Controllers\CategoryController::class, 'show'])->name('category.show');
-        Route::get('/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('category.create');
-        Route::get('/edit/{category}', [App\Http\Controllers\CategoryController::class, 'edit'])->name('category.edit');
-        Route::get('/destroy/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.destroy');
-        Route::post('/store', [App\Http\Controllers\CategoryController::class, 'store'])->name('category.store');
-        Route::post('/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
-        Route::post('/bulkdestroy', [App\Http\Controllers\CategoryController::class, 'bulkdestroy'])->name('category.bulkdestroy');
+        Route::get('/', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/show/{category}', [App\Http\Controllers\CategoryController::class, 'show'])->name('categories.show');
+        Route::get('/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('categories.create');
+        Route::get('/edit/{category}', [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
+        Route::get('/destroy/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
+        Route::post('/store', [App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
+        Route::post('/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\CategoryController::class, 'bulkdestroy'])->name('categories.bulkdestroy');
     });
 
     Route::group(['prefix'=>'product'],function(){
-        Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('product.index');
+        Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
         
-        Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('product.create');
-        Route::get('/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
-        Route::get('/edit/{product}', [App\Http\Controllers\ProductController::class, 'edit'])->name('product.edit');
-        Route::get('/destroy/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
-        Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
-        Route::post('/update', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
-        Route::post('/bulkdestroy', [App\Http\Controllers\ProductController::class, 'bulkdestroy'])->name('product.bulkdestroy');
+        Route::get('/create', [App\Http\Controllers\ProductController::class, 'create'])->name('products.create');
+        Route::get('/{product}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
+        Route::get('/edit/{product}', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
+        Route::get('/destroy/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
+        Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+        Route::post('/update', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\ProductController::class, 'bulkdestroy'])->name('products.bulkdestroy');
+        Route::post('/removeimage/{product}', [App\Http\Controllers\ProductController::class, 'removeImage'])->name('products.removeimage');
     });
 
     
     Route::group(['prefix'=>'ingredient'],function(){
-        Route::get('/', [App\Http\Controllers\IngredientController::class, 'index'])->name('ingredient.index');
-        Route::get('/create', [App\Http\Controllers\IngredientController::class, 'create'])->name('ingredient.create');
-        Route::get('/{ingredient}', [App\Http\Controllers\IngredientController::class, 'show'])->name('ingredient.show');
-        Route::get('/edit/{ingredient}', [App\Http\Controllers\IngredientController::class, 'edit'])->name('ingredient.edit');
-        Route::get('/destroy/{ingredient}', [App\Http\Controllers\IngredientController::class, 'destroy'])->name('ingredient.destroy');
-        Route::post('/store', [App\Http\Controllers\IngredientController::class, 'store'])->name('ingredient.store');
-        Route::post('/update', [App\Http\Controllers\IngredientController::class, 'update'])->name('ingredient.update');
-        Route::post('/bulkdestroy', [App\Http\Controllers\IngredientController::class, 'bulkdestroy'])->name('ingredient.bulkdestroy');
+        Route::get('/', [App\Http\Controllers\IngredientController::class, 'index'])->name('ingredients.index');
+        Route::get('/create', [App\Http\Controllers\IngredientController::class, 'create'])->name('ingredients.create');
+        Route::get('/{ingredient}', [App\Http\Controllers\IngredientController::class, 'show'])->name('ingredients.show');
+        Route::get('/edit/{ingredient}', [App\Http\Controllers\IngredientController::class, 'edit'])->name('ingredients.edit');
+        Route::get('/destroy/{ingredient}', [App\Http\Controllers\IngredientController::class, 'destroy'])->name('ingredients.destroy');
+        Route::post('/store', [App\Http\Controllers\IngredientController::class, 'store'])->name('ingredients.store');
+        Route::post('/update', [App\Http\Controllers\IngredientController::class, 'update'])->name('ingredients.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\IngredientController::class, 'bulkdestroy'])->name('ingredients.bulkdestroy');
     });
 
     Route::group(['prefix'=>'addableitem'],function(){
-        Route::get('/', [App\Http\Controllers\AddableItemController::class, 'index'])->name('addableitem.index');
-        Route::get('/create', [App\Http\Controllers\AddableItemController::class, 'create'])->name('addableitem.create');
-        Route::get('/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'show'])->name('addableitem.show');
-        Route::get('/edit/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'edit'])->name('addableitem.edit');
-        Route::get('/destroy/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'destroy'])->name('addableitem.destroy');
-        Route::post('/store', [App\Http\Controllers\AddableItemController::class, 'store'])->name('addableitem.store');
-        Route::post('/update', [App\Http\Controllers\AddableItemController::class, 'update'])->name('addableitem.update');
-        Route::post('/bulkdestroy', [App\Http\Controllers\AddableItemController::class, 'bulkdestroy'])->name('addableitem.bulkdestroy');
+        Route::get('/', [App\Http\Controllers\AddableItemController::class, 'index'])->name('addableitems.index');
+        Route::get('/create', [App\Http\Controllers\AddableItemController::class, 'create'])->name('addableitems.create');
+        Route::get('/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'show'])->name('addableitems.show');
+        Route::get('/edit/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'edit'])->name('addableitems.edit');
+        Route::get('/destroy/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'destroy'])->name('addableitems.destroy');
+        Route::post('/store', [App\Http\Controllers\AddableItemController::class, 'store'])->name('addableitems.store');
+        Route::post('/update', [App\Http\Controllers\AddableItemController::class, 'update'])->name('addableitems.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\AddableItemController::class, 'bulkdestroy'])->name('addableitems.bulkdestroy');
     });
     
 });

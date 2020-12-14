@@ -7,14 +7,31 @@ return [
             'label'=>''
         ],
     ],
+    'categories'=>[
+        'fields'=>[
+            [   
+                'label'=>'Name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
+                'type'=>'text'
+            ]
+        ],
+    ],
     'roles'=>[
         'fields'=>[
             [
                 'label'=>'Name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
                 'type'=>'text'
             ],
             [
                 'label'=>'Display Name',
+                'column'=>'display_name',
+                'field'=>'display_name',
+                'edit_field'=>'display_name',
                 'type'=>'text'
             ],
             

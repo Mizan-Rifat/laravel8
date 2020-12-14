@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->all());
 
-        return redirect()->route('category.index')->with('message', 'Created Successfully!');
+        return redirect()->route('categories.index')->with('message', 'Created Successfully!');
     }
 
     public function show(Category $category)
@@ -42,14 +42,14 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('category.index')->with('message', 'Updated Successfully!');
+        return redirect()->route('categories.index')->with('message', 'Updated Successfully!');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
 
-        return redirect()->route('category.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('categories.index')->with('message', 'Deleted Successfully!');
 
     }
 
@@ -57,6 +57,6 @@ class CategoryController extends Controller
     public function bulkDestroy(Request $request){
 
         Category::destroy($request->ids);
-        return redirect()->route('category.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('categories.index')->with('message', 'Deleted Successfully!');
     }
 }

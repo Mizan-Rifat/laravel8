@@ -1,39 +1,22 @@
 @extends('adminlte::page')
 
-@section('title', 'Categories')
+@php
 
-@section('content_header')
-    <h1>Categories</h1>
 
-    @php
-        $arg = ['category'=>$category->id];
-    @endphp
+    $dataType = 'category';
 
-    <x-showActions 
+    $data = $category;
 
-        indexroute='category.index'
-        editroute='category.edit'
-        destroyroute='category.destroy'
-        :arg="$arg"
+    $allFields = config('datatypes.categories')['fields'];
 
-    />
-@stop
+@endphp
 
-@section('content')
-
-<div class="card">
-        <h5 class="card-header">Name</h5>
-        <div class="card-body">
-            <p>{{$category->name}}</p>
-        </div>
-    </div>
-
-@endsection
-
+    @include('admin.partials.show')
 
 @section('css')
 @stop
 
+    
 
 @section('js')
 <script>

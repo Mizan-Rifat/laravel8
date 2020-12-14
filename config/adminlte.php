@@ -265,9 +265,25 @@ return [
             'icon' => 'fas fa-th',
         ],
         [
-            'text' => 'Product',
-            'url'  => 'admin/product',
+            'text' => 'Products',
             'icon' => 'fas fa-th',
+            'submenu' => [
+                [
+                    'text' => 'Products',
+                    'url'  => 'admin/product',
+                    'icon' => 'fas fa-th',
+                ],
+                [
+                    'text' => 'Ingredients',
+                    'url'  => 'admin/ingredient',
+                    'icon' => 'fas fa-th',
+                ],
+                [
+                    'text' => 'Addable Item',
+                    'url'  => 'admin/addableitem',
+                    'icon' => 'fas fa-th',
+                ],
+            ],
         ],
 
 

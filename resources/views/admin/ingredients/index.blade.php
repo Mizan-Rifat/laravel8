@@ -1,11 +1,21 @@
 @extends('adminlte::page')
 
-@section('title', 'Ingredients')
+@php
+
+    $dataType = 'Ingredient';
+
+    $data = $ingredients;
+
+    $allFields = config('datatypes.ingredients')['fields'];
+
+@endphp
+
+@section('title', pluralTitle($dataType))
 
 @section('content_header')
-    <h1>Ingredients</h1>
+    <h1>{{ pluralTitle($dataType) }}</h1>
 
-    <x-topAction route="ingredient.create" />
+    <x-topAction :route="get_route('ingredient','create')" />
     
 @stop
 
@@ -17,8 +27,7 @@
         </div>
     @endif
 
-    @include('admin.ingredients.table')
-
+@include('admin.partials.table')
 
 @endsection
 
@@ -29,6 +38,36 @@
 
 @section('js')
 <script>
+
+$(document).ready(function() {
+        $('#example').DataTable( {
+            "order": [],
+            'columnDefs': [
+                {
+                    'targets': 0,
+                    'searchable':false,
+                    'orderable':false,
+
+                },
+            ],
+        });
+
+
+        $('#deleteBtn').click(function(e) {
+            e.preventDefault();
+            $('#myTable').submit();
+        })
+        
+        $('#bulkSelect').click(function(e) {
+         
+                $('.checkboxes').each(function() {
+                    $(this).prop('checked',e.target.checked)
+                });
+            
+        })
+
+
+    } );
     
 </script>
 @stop

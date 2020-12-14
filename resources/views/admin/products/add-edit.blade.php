@@ -8,7 +8,6 @@
 
     $allFields = config('datatypes.products')['fields'];
 
-
 @endphp
 
 

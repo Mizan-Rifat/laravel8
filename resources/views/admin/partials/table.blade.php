@@ -1,15 +1,9 @@
-@php
-
-$allFields = config('datatypes.products')['fields'];
-
-@endphp
-
 
 <div class="card">
        
         <div class="card-body">
 
-        <form action="{{route('product.bulkdestroy')}}" id="myTable" method="post">
+        <form action="{{route(get_route($dataType,'bulkdestroy'))}}" id="myTable" method="post">
             @csrf
           <table class="table table-striped projects" id='example'>
               <thead>
@@ -36,10 +30,10 @@ $allFields = config('datatypes.products')['fields'];
 
               
 
-              @foreach($products as $product)
+              @foreach($data as $item)
                   <tr>
                       <td>
-                        <input type="checkbox" name="ids[]" class="checkboxes" value="{{$product->id}}">
+                        <input type="checkbox" name="ids[]" class="checkboxes" value="{{$item->id}}">
                       </td>
 
 
@@ -47,34 +41,45 @@ $allFields = config('datatypes.products')['fields'];
 
                         @if($field['type'] == 'image')
                             <td>
-                              <img src="{{ asset(json_decode( $product->{$field['field']} )[0] ) }}" alt="" style="width:80px">
+                              <img src="{{ asset(json_decode( $item->{$field['field']} )[0] ?? null ) }}" alt="" style="width:80px">
                             </td>
 
                         @elseif($field['type'] == 'select')
                             <td>
-                              {{ $product->{$field['field']}->{$field['relationship_field']} }}
+                              {{ $item->{$field['field']}->{$field['relationship_field']} }}
                             </td>
                         @elseif($field['type'] == 'text-area')
                             <td>
-                              {!! $product->{$field['field']} !!}
+                              {!! $item->{$field['field']} !!}
+                            </td>
+                        @elseif($field['type'] == 'relationship-select')
+                            <td>
+                              {!! $item->{$field['field']}->{$field['relationship_field']} !!}
+                            </td>
+                   
+                        @elseif($field['type'] == 'relationship-multi-select')
+                            <td>
+                              {{ $item->{$field['field']}->pluck($field['relationship_field'])->implode(",") }}
                             </td>
                         @else
                           <td>
-                            {{ $product->{$field['field']} }}
+                            {{ $item->{$field['field']} }}
                           </td>
                         @endif
 
                       @endforeach              
 
                       @php
-                        $arg = ['product'=>$product->id];
+                        $arg = [];
+                        $arg[strtolower($dataType)] = $item->id; 
+
                       @endphp
 
                       <x-tableActions 
 
-                        showroute='product.show'
-                        editroute='product.edit'
-                        destroyroute='product.destroy'
+                        :showroute="get_route($dataType,'show')"
+                        :editroute="get_route($dataType,'edit')"
+                        :destroyroute="get_route($dataType,'destroy')"
                         :arg="$arg"
 
                       />

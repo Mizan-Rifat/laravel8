@@ -9,14 +9,14 @@ use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category','ingredients','addableItems')->get();
 
-        // return $products;
         return view('admin.products.index')->with('products',$products);
     }
 
@@ -114,14 +114,14 @@ class ProductController extends Controller
         ]);
         
 
-        return redirect()->route('product.index')->with('message', 'Updated Successfully!');
+        return redirect()->route('products.index')->with('message', 'Updated Successfully!');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->route('product.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('products.index')->with('message', 'Deleted Successfully!');
 
     }
 
@@ -130,6 +130,28 @@ class ProductController extends Controller
 
 
         Product::destroy($request->ids);
-        return redirect()->route('product.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('products.index')->with('message', 'Deleted Successfully!');
+    }
+
+    public function removeImage(Product $product,Request $request){
+        $images = json_decode($product->image);
+
+        
+
+
+        if (($key = array_search($request->image, $images)) !== false) {
+            unset($images[$key]);
+        }
+
+
+        $product->update([
+            'image'=>json_encode(array_values($images)),
+        ]);
+
+        Storage::delete(str_replace("images/","",$request->image));
+
+        return response()->json([
+            'message' => 'Image removed successfully'
+        ],200);
     }
 }

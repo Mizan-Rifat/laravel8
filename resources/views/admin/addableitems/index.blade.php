@@ -1,11 +1,21 @@
 @extends('adminlte::page')
 
+@php
+
+    $dataType = 'addableItem';
+
+    $data = $addableitems;
+
+    $allFields = config('datatypes.addable_items')['fields'];
+
+@endphp
+
 @section('title', 'AddableItems')
 
 @section('content_header')
     <h1>Addable Items</h1>
 
-    <x-topAction route="addableitem.create" />
+    <x-topAction :route="get_route('addableItem','create')" />
     
 @stop
 
@@ -17,7 +27,7 @@
         </div>
     @endif
 
-    @include('admin.addableitems.table')
+    @include('admin.partials.table')
 
 
 @endsection

@@ -1,27 +1,33 @@
 @extends('adminlte::page')
 
-@section('title', 'Roles')
+@php
 
-<!-- @section('plugins.Datatables', true) -->
+    $dataType = 'role';
+
+    $data = $roles;
+
+    $allFields = config('datatypes.roles')['fields'];
+
+@endphp
+
+@section('title', pluralTitle($dataType))
 
 @section('content_header')
-    <h1>Roles</h1>
+    <h1>{{ pluralTitle($dataType) }}</h1>
 
-    <x-topAction route="roles.create" />
+    <x-topAction :route="get_route('roles','create')" />
     
 @stop
 
 @section('content')
 
-@if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
-@endif
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
 
-
-  @include('admin.roles.table')
-  @include('admin.roles.partials.deleteModal')
+@include('admin.partials.table')
 
 @endsection
 
@@ -32,7 +38,8 @@
 
 @section('js')
 <script>
-    $(document).ready(function() {
+
+$(document).ready(function() {
         $('#example').DataTable( {
             "order": [],
             'columnDefs': [
@@ -61,8 +68,6 @@
 
 
     } );
-
-
-
+    
 </script>
 @stop

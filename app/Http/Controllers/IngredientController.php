@@ -18,7 +18,7 @@ class IngredientController extends Controller
     {
         $ingredient = Ingredient::create($request->all());
 
-        return redirect()->route('ingredient.index')->with('message', 'Created Successfully!');
+        return redirect()->route('ingredients.index')->with('message', 'Created Successfully!');
     }
 
     public function show(Ingredient $ingredient)
@@ -42,14 +42,14 @@ class IngredientController extends Controller
 
         $ingredient->update($request->all());
 
-        return redirect()->route('ingredient.index')->with('message', 'Updated Successfully!');
+        return redirect()->route('ingredients.index')->with('message', 'Updated Successfully!');
     }
 
     public function destroy(Ingredient $ingredient)
     {
         $ingredient->delete();
 
-        return redirect()->route('ingredient.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('ingredients.index')->with('message', 'Deleted Successfully!');
 
     }
 
@@ -57,6 +57,6 @@ class IngredientController extends Controller
     public function bulkDestroy(Request $request){
 
         Ingredient::destroy($request->ids);
-        return redirect()->route('ingredient.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('ingredients.index')->with('message', 'Deleted Successfully!');
     }
 }
