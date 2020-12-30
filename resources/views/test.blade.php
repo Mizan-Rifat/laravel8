@@ -31,128 +31,93 @@
 </head>
 
 <body>
-<div class="container">
-        <!-- The file upload form used as target for the file upload widget -->
-        <form id="fileupload" action="#" method="POST" enctype="multipart/form-data">
-
-            <div class="row files" id="files1">
-                <h2>Files 1</h2>
-                <span class="btn btn-default btn-file">
-                    Browse  <input type="file" name="files1" multiple />
-                </span>
-                <br />
-                <ul class="fileList"></ul>
-            </div>
 
 
-            <div class="row">
-                <button type="x" id="uploadBtn" class="btn primary start">Start upload</button>
-            </div>
 
-            <br>
-            <div class="row">
-                <div class="span16">
+<form action="/test" method="post" id='form'>
+@csrf
 
-                    <table class="zebra-striped"><tbody class="files"></tbody></table>
-                </div>
-            </div>
-        </form>
-    </div>
-  
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-    
-    $.fn.fileUploader = function (filesToUpload, sectionIdentifier) {
-    var fileIdCounter = 0;
+    <input type="text" name="model_name" id="" placeholder="model name">
+<br>
+    <input type="text" name="table_name" id="" placeholder="table name">
+<br>
+    <label for="id">ID:</label>
 
-    this.closest(".files").change(function (evt) {
-        var output = [];
+        <select name="id" id="id">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
 
-        for (var i = 0; i < evt.target.files.length; i++) {
-            fileIdCounter++;
-            var file = evt.target.files[i];
-            var fileId = sectionIdentifier + fileIdCounter;
+        <br>
+    <label for="timestamps">timestamps:</label>
 
-            filesToUpload.push({
-                id: fileId,
-                file: file
-            });
+        <select name="timestamps" id="timestamps">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
 
-            var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Remove</a>";
 
-            output.push("<li><strong>", escape(file.name), "</strong> - ", file.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-        };
+<br>
+    <input type="text" name="name[]" placeholder="Column name" 
+        autocomplete="off" class="form-control">
 
-        $(this).children(".fileList")
-            .append(output.join(""));
+    <input type="text" name="type[]" placeholder="Type" 
+        autocomplete="off" class="form-control">
 
-        //reset the input to null - nice little chrome bug!
-        evt.target.value = null;
-    });
+        <label for="nullable">Nullable:</label>
 
-    $(this).on("click", ".removeFile", function (e) {
-        e.preventDefault();
+        <select name="nullable[]" id="nullable">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
 
-        var fileId = $(this).parent().children("a").data("fileid");
 
-        // loop through the files array and check if the name of that file matches FileName
-        // and get the index of the match
-        for (var i = 0; i < filesToUpload.length; ++i) {
-            if (filesToUpload[i].id === fileId)
-                filesToUpload.splice(i, 1);
-        }
+    <input type="text" name="default[]" placeholder="default" 
+        autocomplete="off" class="form-control">
 
-        $(this).parent().remove();
-    });
 
-    this.clear = function () {
-        for (var i = 0; i < filesToUpload.length; ++i) {
-            if (filesToUpload[i].id.indexOf(sectionIdentifier) >= 0)
-                filesToUpload.splice(i, 1);
-        }
+    <br>
 
-        $(this).children(".fileList").empty();
-    }
 
-    return this;
-};
+        <button type="submit">submit</button>
 
-(function () {
-    var filesToUpload = [];
 
-    var files1Uploader = $("#files1").fileUploader(filesToUpload, "files1");
-    var files2Uploader = $("#files2").fileUploader(filesToUpload, "files2");
-    var files3Uploader = $("#files3").fileUploader(filesToUpload, "files3");
 
-    $("#uploadBtn").click(function (e) {
-        e.preventDefault();
+</form>
 
-        var formData = new FormData();
+<button id='add'>Add</button>
 
-        for (var i = 0, len = filesToUpload.length; i < len; i++) {
-            formData.append("files", filesToUpload[i].file);
-        }
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 
-        $.ajax({
-            url: "http://requestb.in/1k0dxvs1",
-            data: formData,
-            processData: false,
-            contentType: false,
-            type: "POST",
-            success: function (data) {
-                alert("DONE");
+<script>
+    let item = `
+    <br>
 
-                files1Uploader.clear();
-                files2Uploader.clear();
-                files3Uploader.clear();
-            },
-            error: function (data) {
-                alert("ERROR - " + data.responseText);
-            }
-        });
-    });
-})()
-    </script>
+
+    <input type="text" name="name[]" placeholder="Column name" 
+        autocomplete="off" class="form-control">
+
+    <input type="text" name="type[]" placeholder="Type" 
+        autocomplete="off" class="form-control">
+
+        <label for="nullable">Nullable:</label>
+
+        <select name="nullable[]" id="nullable">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+
+    <input type="text" name="default[]" placeholder="default" 
+        autocomplete="off" class="form-control">`
+
+
+        $('#add').click(()=>{
+            $( "#form" ).append( item );
+        })
+
+        
+</script>
+
 </body>
 
 </html>

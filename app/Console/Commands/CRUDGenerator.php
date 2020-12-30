@@ -46,6 +46,7 @@ class CRUDGenerator extends Command
         $this->model($data['model_name']);
         $this->controller($data['model_name']);
         $this->routes($data['model_name']);
+        $this->formRequest($data['model_name']);
 
         $this->adminView($data['model_name']);
         
@@ -127,12 +128,21 @@ class CRUDGenerator extends Command
 
         
 
-        $verbs=['index','show','create','edit','destroy','store','update','bulkdestroy'];
+        $verbs=[
+                'index'=>'get',
+                'create'=>'get',
+                'show'=>'get',
+                'edit'=>'get',
+                'destroy'=>'get',
+                'store'=>'post',
+                'update'=>'post',
+                'bulkdestroy'=>'post'
+            ];
 
         $routes ="Route::group(['prefix'=>'".strtolower($name)."'],function(){\n";
 
         foreach ($verbs as $key => $verb) {
-            $routes = $routes."\tRoute::get('/".$verb."', [App\\Http\\Controllers\\".ucwords($name)."Controller::class, '".$verb."'])->name('".strtolower($name).".".$verb."');\n";
+            $routes = $routes."\tRoute::".$verb."('/".$key."', [App\\Http\\Controllers\\".ucwords($name)."Controller::class, '".$verb."'])->name('".Str::plural(strtolower($name)).".".$verb."');\n";
         }
 
         $routes = $routes."});";
@@ -210,6 +220,16 @@ class CRUDGenerator extends Command
         );
 
         file_put_contents(app_path("/Models/{$name}.php"), $modelTemplate);
+    }
+    protected function formRequest($name)
+    {
+        $requestTemplate = str_replace(
+            ['{{modelName}}'],
+            [$name],
+            $this->getStub('RequestView')
+        );
+
+        file_put_contents(app_path("/Http/Requests/{$name}Request.php"), $requestTemplate);
     }
     protected function controller($name)
     {
