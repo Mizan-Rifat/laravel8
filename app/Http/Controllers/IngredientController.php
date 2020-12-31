@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IngredientRequest;
 use Illuminate\Http\Request;
 use App\Models\Ingredient;
 
@@ -9,9 +10,13 @@ class IngredientController extends Controller
 {
     public function index()
     {
-        $ingredients = Ingredient::all();
+        $dataType = 'ingredient';
+        $data = Ingredient::all();
 
-        return view('admin.ingredients.index')->with('ingredients',$ingredients);
+        return view('admin.bread.index',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function store(Request $request)
@@ -23,17 +28,36 @@ class IngredientController extends Controller
 
     public function show(Ingredient $ingredient)
     {
-        return view('admin.ingredients.show')->with('ingredient',$ingredient);
+        $dataType = 'ingredient';
+        $data = $ingredient;
+
+        return view('admin.bread.show',compact(
+            'data',
+            'dataType'
+        ));
+
     }
     
     public function edit(Ingredient $ingredient)
     {
-        return view('admin.ingredients.add-edit')->with('ingredient',$ingredient);
+        $dataType = 'ingredient';
+        $data = $ingredient;
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function create()
     {
-        return view('admin.ingredients.add-edit');
+        $dataType = 'ingredient';
+        $data = null;
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function update(Request $request)

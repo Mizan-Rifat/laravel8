@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'users'=>[
         'fields'=>[
@@ -49,7 +48,19 @@ return [
             
         ],
     ],
-    'addable_items'=>[
+    'players'=>[
+        'fields'=>[
+            [
+                'label'=>'Name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
+                'type'=>'text'
+            ],
+            
+        ],
+    ],
+    'addableItems'=>[
         'fields'=>[
             [
                 'label'=>'Name',

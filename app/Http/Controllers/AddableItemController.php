@@ -9,10 +9,17 @@ class AddableItemController extends Controller
 {
     public function index()
     {
-        $addableitems = AddableItem::all();
+        // $addableitems = AddableItem::all();
 
 
-        return view('admin.addableitems.index')->with('addableitems',$addableitems);
+        // return view('admin.addableitems.index')->with('addableitems',$addableitems);
+        $dataType = 'addableItem';
+        $data = AddableItem::all();
+        
+        return view('admin.bread.index',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function store(Request $request)
@@ -35,19 +42,39 @@ class AddableItemController extends Controller
         return redirect()->route('addableitem.index')->with('message', 'Created Successfully!');
     }
 
-    public function show(AddableItem $addableitem)
+    public function show(AddableItem $addableItem)
     {
-        return view('admin.addableitems.show')->with('addableitem',$addableitem);
+        $dataType = 'addableItem';
+        $data = $addableItem;
+
+        return view('admin.bread.show',compact(
+            'data',
+            'dataType'
+        ));
+
+        // return view('admin.bread.show')->with('addableitem',$addableitem);
     }
     
-    public function edit(AddableItem $addableitem)
+    public function edit(AddableItem $addableItem)
     {
-        return view('admin.addableitems.add-edit')->with('addableitem',$addableitem);
+        $dataType = 'addableItem';
+        $data = $addableItem;
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function create()
     {
-        return view('admin.addableitems.add-edit');
+        $dataType = 'addableItem';
+        $data = null;
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
+        
     }
 
     public function update(Request $request)
@@ -73,9 +100,9 @@ class AddableItemController extends Controller
         return redirect()->route('addableitem.index')->with('message', 'Updated Successfully!');
     }
 
-    public function destroy(AddableItem $addableitem)
+    public function destroy(AddableItem $addableItem)
     {
-        $addableitem->delete();
+        $addableItem->delete();
 
         return redirect()->route('addableitem.index')->with('message', 'Deleted Successfully!');
 
@@ -86,5 +113,9 @@ class AddableItemController extends Controller
 
         AddableItem::destroy($request->ids);
         return redirect()->route('addableitem.index')->with('message', 'Deleted Successfully!');
+    }
+
+    public function removeImage(){
+        
     }
 }

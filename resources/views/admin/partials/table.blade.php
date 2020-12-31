@@ -71,7 +71,7 @@
 
                       @php
                         $arg = [];
-                        $arg[strtolower($dataType)] = $item->id; 
+                        $arg[singularDatatype($dataType)] = $item->id; 
 
                       @endphp
 

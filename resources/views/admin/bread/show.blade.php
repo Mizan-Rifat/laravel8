@@ -2,11 +2,7 @@
 
 @php
 
-    $dataType = 'role';
-
-    $data = $role;
-
-    $allFields = config('datatypes.roles')['fields'];
+    $allFields = config("datatypes.".pluralDatatype($dataType))['fields'];
 
 @endphp
 
@@ -14,8 +10,6 @@
 
 @section('css')
 @stop
-
-    
 
 @section('js')
 <script>

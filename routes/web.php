@@ -68,11 +68,7 @@ Route::post('/test', function (Request $request) {
 
 Route::get('/test', function () {
 
-    $str  = 'images/products/CQ0zyeV3E2uwRKFCVpBHwyCtc3Fre2FJFt5PEjkS.jpg';
-
-    return str_replace("images/","",$str);
-
-    Storage::delete("products/zcBCZIcrVkRCusAOn8MEvFaQfJ195Jqi7hIDLkyu.jpg");
+    return pluralDatatype('AddableItem');
 
 });
 
@@ -130,12 +126,13 @@ Route::group(['prefix'=>'admin'],function(){
     Route::group(['prefix'=>'addableitem'],function(){
         Route::get('/', [App\Http\Controllers\AddableItemController::class, 'index'])->name('addableitems.index');
         Route::get('/create', [App\Http\Controllers\AddableItemController::class, 'create'])->name('addableitems.create');
-        Route::get('/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'show'])->name('addableitems.show');
-        Route::get('/edit/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'edit'])->name('addableitems.edit');
-        Route::get('/destroy/{addableitem}', [App\Http\Controllers\AddableItemController::class, 'destroy'])->name('addableitems.destroy');
+        Route::get('/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'show'])->name('addableitems.show');
+        Route::get('/edit/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'edit'])->name('addableitems.edit');
+        Route::get('/destroy/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'destroy'])->name('addableitems.destroy');
         Route::post('/store', [App\Http\Controllers\AddableItemController::class, 'store'])->name('addableitems.store');
         Route::post('/update', [App\Http\Controllers\AddableItemController::class, 'update'])->name('addableitems.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\AddableItemController::class, 'bulkdestroy'])->name('addableitems.bulkdestroy');
+        Route::post('/removeimage/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'removeImage'])->name('addableitems.removeimage');
     });
     
 });

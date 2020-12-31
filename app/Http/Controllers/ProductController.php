@@ -15,9 +15,14 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category','ingredients','addableItems')->get();
 
-        return view('admin.products.index')->with('products',$products);
+        $dataType = 'product';
+        $data = Product::with('category','ingredients','addableItems')->get();
+
+        return view('admin.bread.index',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function store(ProductRequest $request)
@@ -48,24 +53,31 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-
         $product->load('category');
+        $dataType = 'product';
+        $data = $product;
 
-        // return $product;
-        return view('admin.products.show')->with('product',$product);
+        return view('admin.bread.show',compact(
+            'data',
+            'dataType'
+        ));
     }
     
     public function edit(Product $product)
     {
 
         $product->load('category','ingredients','addableItems');
+        
+        $dataType = 'product';
+        $data = $product;
     
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
         $addableItems = AddableItem::all();
   
-        return view('admin.products.add-edit',compact(
-            'product',
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType',
             'categories',
             'ingredients',
             'addableItems',
@@ -75,11 +87,13 @@ class ProductController extends Controller
 
     public function create()
     {
+        $dataType='product';
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
         $addableItems = AddableItem::all();
 
-        return view('admin.products.add-edit',compact(
+        return view('admin.bread.add-edit',compact(
+            'dataType',
             'categories',
             'ingredients',
             'addableItems',

@@ -2,11 +2,7 @@
 
 @php
 
-    $dataType = 'product';
-
-    $data = isset($product) ? $product : null;
-
-    $allFields = config('datatypes.products')['fields'];
+    $allFields = config("datatypes.".pluralDatatype($dataType))['fields'];
 
 @endphp
 

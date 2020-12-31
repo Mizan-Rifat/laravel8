@@ -19,7 +19,7 @@ class {{modelName}}Request extends FormRequest
 
     public function rules()
     {
-       // return Route::currentRouteName() == 'product.store' ? $this->storeRules : $this->updateRules;
+       return Route::currentRouteName() == '{{modelNamePluralLowerCase}}.store' ? $this->storeRules : $this->updateRules;
     }
 
     public function messages()

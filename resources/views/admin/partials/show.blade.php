@@ -35,7 +35,8 @@ foreach($allFields as $field){
     
     @php
         $arg = [];
-        $arg[strtolower($dataType)] = $data->id; 
+        $arg[singularDatatype($dataType)] = $data->id;
+     
 
     @endphp
 

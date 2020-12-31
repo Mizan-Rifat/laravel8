@@ -41,14 +41,14 @@ class CRUDGenerator extends Command
         
         $data = $this->argument('data');
 
-        $this->addPermissions($data['table']['name']);
-        $this->migration($data['table']);
-        $this->model($data['model_name']);
+        // $this->addPermissions($data['table']['name']);
+        // $this->migration($data['table']);
+        // $this->model($data['model_name']);
         $this->controller($data['model_name']);
-        $this->routes($data['model_name']);
+        // $this->routes($data['model_name']);
         $this->formRequest($data['model_name']);
 
-        $this->adminView($data['model_name']);
+        // $this->adminView($data['model_name']);
         
     }
 
@@ -59,11 +59,15 @@ class CRUDGenerator extends Command
         
         $indexTemplate = str_replace(
             [
+                '{{modelName}}',
                 '{{modelNamePluralUcCase}}',
+                '{{modelNamePluralLowerCase}}',
                 '{{modelNameSingularLowerCase}}'
             ],
             [
+                $model_name,
                 ucwords(Str::plural($model_name)),
+                strtolower(Str::plural($model_name)),
                 strtolower($model_name)
             ],
             $this->getStub('IndexView')
@@ -125,9 +129,7 @@ class CRUDGenerator extends Command
     }
 
     public function routes($name){
-
         
-
         $verbs=[
                 'index'=>'get',
                 'create'=>'get',
@@ -142,15 +144,12 @@ class CRUDGenerator extends Command
         $routes ="Route::group(['prefix'=>'".strtolower($name)."'],function(){\n";
 
         foreach ($verbs as $key => $verb) {
-            $routes = $routes."\tRoute::".$verb."('/".$key."', [App\\Http\\Controllers\\".ucwords($name)."Controller::class, '".$verb."'])->name('".Str::plural(strtolower($name)).".".$verb."');\n";
+            $routes = $routes."\tRoute::".$verb."('/".$key."', [App\\Http\\Controllers\\".ucwords($name)."Controller::class, '".$verb."'])->name('".Str::plural(strtolower($name)).".".$key."');\n";
         }
 
         $routes = $routes."});";
 
-
         File::append(base_path('routes/web.php'), $routes);
-
-
 
     }
 
@@ -209,8 +208,6 @@ class CRUDGenerator extends Command
         file_put_contents(base_path("/database/migrations/".Carbon::now()->format('Y_m_d_u')."_create_{$tableCollection['name']}_table.php"), $migrationTemplate);
     }
 
-
-
     protected function model($name)
     {
         $modelTemplate = str_replace(
@@ -224,8 +221,15 @@ class CRUDGenerator extends Command
     protected function formRequest($name)
     {
         $requestTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}'
+            ],
+            [
+                $name,
+                pluralDatatype($name),
+
+            ],
             $this->getStub('RequestView')
         );
 
@@ -241,8 +245,8 @@ class CRUDGenerator extends Command
             ],
             [
                 $name,
-                strtolower(Str::plural($name)),
-                strtolower($name)
+                pluralDatatype($name),
+                singularDatatype($name)
             ],
             $this->getStub('Controller')
         );

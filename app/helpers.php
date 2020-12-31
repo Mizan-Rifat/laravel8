@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('camelToTitle')) {
+if (! function_exists('camelToWords')) {
 
     function camelToWords($camelStr)
     {
@@ -19,11 +19,30 @@ if (! function_exists('singularTitle')) {
 
     
 }
+if (! function_exists('singularDatatype')) {
+
+    function singularDatatype($dataType)
+    {
+        return lcfirst(Str::singular($dataType));
+    }
+
+    
+}
 if (! function_exists('pluralTitle')) {
 
     function pluralTitle($word)
     {
         return ucfirst(Str::plural(camelToWords($word)));
+    }
+
+    
+}
+
+if (! function_exists('pluralDatatype')) {
+
+    function pluralDatatype($dataType)
+    {
+        return lcfirst(Str::plural($dataType));
     }
 
     

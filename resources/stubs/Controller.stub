@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\{{modelName}}Request;
 use Illuminate\Http\Request;
 use App\Models\{{modelName}};
 
@@ -9,31 +10,54 @@ class {{modelName}}Controller extends Controller
 {
     public function index()
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::all();
+        $dataType = '{{modelNameSingularLowerCase}}';
+        $data = {{modelName}}::all();
 
-        return view('admin.{{modelNamePluralLowerCase}}.index')->with('{{modelNamePluralLowerCase}}',${{modelNamePluralLowerCase}});
+        return view('admin.bread.index',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function store(Request $request)
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
 
-        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Created Successfully!');
+        return redirect()->route('{{modelNamePluralLowerCase}}.index')->with('message', 'Created Successfully!');
     }
 
     public function show({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        return view('admin.{{modelNamePluralLowerCase}}.show')->with('{{modelNameSingularLowerCase}}',${{modelNameSingularLowerCase}});
+        $dataType = '{{modelNameSingularLowerCase}}';
+        $data = ${{modelNameSingularLowerCase}};
+
+        return view('admin.bread.show',compact(
+            'data',
+            'dataType'
+        ));
+
     }
     
     public function edit({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        return view('admin.{{modelNamePluralLowerCase}}.add-edit')->with('{{modelNameSingularLowerCase}}',${{modelNameSingularLowerCase}});
+        $dataType = '{{modelNameSingularLowerCase}}';
+        $data = ${{modelNameSingularLowerCase}};
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function create()
     {
-        return view('admin.{{modelNamePluralLowerCase}}.add-edit');
+        $dataType = '{{modelNameSingularLowerCase}}';
+        $data = null;
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function update(Request $request)
@@ -42,14 +66,14 @@ class {{modelName}}Controller extends Controller
 
         ${{modelNameSingularLowerCase}}->update($request->all());
 
-        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Updated Successfully!');
+        return redirect()->route('{{modelNamePluralLowerCase}}.index')->with('message', 'Updated Successfully!');
     }
 
     public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
     {
         ${{modelNameSingularLowerCase}}->delete();
 
-        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('{{modelNamePluralLowerCase}}.index')->with('message', 'Deleted Successfully!');
 
     }
 
@@ -57,6 +81,6 @@ class {{modelName}}Controller extends Controller
     public function bulkDestroy(Request $request){
 
         {{modelName}}::destroy($request->ids);
-        return redirect()->route('{{modelNameSingularLowerCase}}.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('{{modelNamePluralLowerCase}}.index')->with('message', 'Deleted Successfully!');
     }
 }

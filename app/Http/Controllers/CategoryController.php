@@ -9,9 +9,13 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $dataType = 'category';
+        $data = Category::all();
 
-        return view('admin.categories.index')->with('categories',$categories);
+        return view('admin.bread.index',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function store(Request $request)
@@ -23,17 +27,34 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        return view('admin.categories.show')->with('category',$category);
+        $dataType = 'category';
+        $data = $category;
+
+        return view('admin.bread.show',compact(
+            'data',
+            'dataType'
+        ));
     }
     
     public function edit(Category $category)
     {
-        return view('admin.categories.add-edit')->with('category',$category);
+        $dataType = 'category';
+        $data = $category;
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function create()
     {
-        return view('admin.categories.add-edit');
+        $dataType = 'category';
+        $data = null;
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType'
+        ));
     }
 
     public function update(Request $request)

@@ -11,16 +11,26 @@ class RoleController extends Controller
 {
     public function index(){
 
-        $roles = Role::all();
+        $dataType = 'role';
+        $data = Role::all();
 
-        // return $roles;
-        return view('admin.roles.index')->with('roles',$roles);
+        return view('admin.bread.index',compact(
+            'data',
+            'dataType'
+        ));
+
     }
 
 
     public function show(Role $role){
+        $dataType = 'role';
+        $data = $role;
+
+        return view('admin.bread.show',compact(
+            'data',
+            'dataType'
+        ));
         
-        return view('admin.roles.show')->with('role',$role);
     }
 
     public function edit(Role $role){
@@ -28,15 +38,17 @@ class RoleController extends Controller
         $role->load('permissions');
         $allPermissions = Permission::all()->groupBy('table_name');
 
-        return view('admin.roles.add-edit',compact(
-            'role',
+        $dataType = 'role';
+        $data = $role;
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType',
             'allPermissions'
         ));
     }
 
     public function update(Request $request){
-
-
 
         $role = Role::findOrFail($request->id);
         $validatedData = $request->validate([
@@ -56,9 +68,13 @@ class RoleController extends Controller
 
 
     public function create(){
-        
+        $dataType = 'role';
+        $data = null;
         $allPermissions = Permission::all()->groupBy('table_name');
-        return view('admin.roles.add-edit',compact(
+
+        return view('admin.bread.add-edit',compact(
+            'data',
+            'dataType',
             'allPermissions'
         ));
     }
