@@ -134,9 +134,23 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('/bulkdestroy', [App\Http\Controllers\AddableItemController::class, 'bulkdestroy'])->name('addableitems.bulkdestroy');
         Route::post('/removeimage/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'removeImage'])->name('addableitems.removeimage');
     });
+
+    Route::group(['prefix'=>'permission'],function(){
+        Route::get('/', [App\Http\Controllers\PermissionController::class, 'index'])->name('permissions.index');
+        Route::get('/create', [App\Http\Controllers\PermissionController::class, 'create'])->name('permissions.create');
+        Route::get('/show/{permission}', [App\Http\Controllers\PermissionController::class, 'show'])->name('permissions.show');
+        Route::get('/edit/{permission}', [App\Http\Controllers\PermissionController::class, 'edit'])->name('permissions.edit');
+        Route::get('/destroy/{permission}', [App\Http\Controllers\PermissionController::class, 'destroy'])->name('permissions.destroy');
+        Route::post('/store', [App\Http\Controllers\PermissionController::class, 'store'])->name('permissions.store');
+        Route::post('/update', [App\Http\Controllers\PermissionController::class, 'update'])->name('permissions.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\PermissionController::class, 'bulkdestroy'])->name('permissions.bulkdestroy');
+    });
+
+
+
+   
     
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 

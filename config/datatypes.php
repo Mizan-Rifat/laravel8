@@ -36,6 +36,25 @@ return [
             
         ],
     ],
+    'permissions'=>[
+        'fields'=>[
+            [
+                'label'=>'Title',
+                'column'=>'title',
+                'field'=>'title',
+                'edit_field'=>'title',
+                'type'=>'text'
+            ],
+            [
+                'label'=>'Table Name',
+                'column'=>'table_name',
+                'field'=>'table_name',
+                'edit_field'=>'table_name',
+                'type'=>'text'
+            ],
+            
+        ],
+    ],
     'ingredients'=>[
         'fields'=>[
             [

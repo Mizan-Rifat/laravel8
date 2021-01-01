@@ -44,9 +44,9 @@ class CRUDGenerator extends Command
         // $this->addPermissions($data['table']['name']);
         // $this->migration($data['table']);
         // $this->model($data['model_name']);
-        $this->controller($data['model_name']);
-        // $this->routes($data['model_name']);
-        $this->formRequest($data['model_name']);
+        // $this->controller($data['model_name']);
+        $this->routes($data['model_name']);
+        // $this->formRequest($data['model_name']);
 
         // $this->adminView($data['model_name']);
         
@@ -144,7 +144,17 @@ class CRUDGenerator extends Command
         $routes ="Route::group(['prefix'=>'".strtolower($name)."'],function(){\n";
 
         foreach ($verbs as $key => $verb) {
-            $routes = $routes."\tRoute::".$verb."('/".$key."', [App\\Http\\Controllers\\".ucwords($name)."Controller::class, '".$verb."'])->name('".Str::plural(strtolower($name)).".".$key."');\n";
+            // $route = $key == 'index' ? "" : $key."/{".singularDatatype($name)."}";
+
+            if($key == 'index'){
+                $route = "";
+            }elseif($key == "show" || $key == "edit" || $key == "destroy"){
+                $route = $key."/{".singularDatatype($name)."}";
+            }else{
+                $route = $key;
+            }
+
+            $routes = $routes."\tRoute::".$verb."('/".$route."', [App\\Http\\Controllers\\".ucwords($name)."Controller::class, '".$key."'])->name('".Str::plural(strtolower($name)).".".$key."');\n";
         }
 
         $routes = $routes."});";
