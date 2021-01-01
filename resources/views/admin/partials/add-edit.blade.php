@@ -157,6 +157,15 @@ foreach($allFields as $field){
 
         </div>
 
+        @if(Route::currentRouteName() == 'roles.create' || Route::currentRouteName() == 'roles.edit')
+            <div class="card-body">
+                <h3>Permissions</h3>
+                @include('admin.partials.checkbox')
+            </div>
+        @endif
+
+        
+
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

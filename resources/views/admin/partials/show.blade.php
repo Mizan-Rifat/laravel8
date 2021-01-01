@@ -1,5 +1,4 @@
 @php
-
 $fields = [];
 
 foreach($allFields as $field){
@@ -78,6 +77,15 @@ foreach($allFields as $field){
         </div>
 
     @endforeach
+
+    <div class='card'>
+        @if(Route::currentRouteName() == 'roles.show')
+            <div class="card-body">
+                <h3>Permissions</h3>
+                @include('admin.partials.checkbox')
+            </div>
+        @endif
+    </div>
 
 @endsection
 

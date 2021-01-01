@@ -23,12 +23,17 @@ class RoleController extends Controller
 
 
     public function show(Role $role){
+       
+        $role->load('permissions');
+        $allPermissions = Permission::all()->groupBy('table_name');
+
         $dataType = 'role';
         $data = $role;
 
         return view('admin.bread.show',compact(
             'data',
-            'dataType'
+            'dataType',
+            'allPermissions'
         ));
         
     }
