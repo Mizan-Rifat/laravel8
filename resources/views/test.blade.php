@@ -34,7 +34,7 @@
 
 
 
-<form action="/test" method="post" id='form'>
+<form action="/crud" method="post" id='form'>
 @csrf
 
     <input type="text" name="model_name" id="" placeholder="model name">

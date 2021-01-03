@@ -41,14 +41,27 @@ class CRUDGenerator extends Command
         
         $data = $this->argument('data');
 
-        // $this->addPermissions($data['table']['name']);
-        // $this->migration($data['table']);
-        // $this->model($data['model_name']);
-        // $this->controller($data['model_name']);
-        $this->routes($data['model_name']);
-        // $this->formRequest($data['model_name']);
+        // dd($data);
 
-        // $this->adminView($data['model_name']);
+        if($data['fields']['permissions']){
+            $this->addPermissions($data['table']['name']);
+        }
+        if($data['fields']['routes']){
+            $this->routes($data['model_name']);
+        }
+        if($data['fields']['migration']){
+            $this->migration($data['table']);
+        }
+        if($data['fields']['model']){
+            $this->model($data['model_name']);
+        }
+        if($data['fields']['controller']){
+            $this->controller($data['model_name']);
+        }
+        if($data['fields']['formRequest']){
+            $this->formRequest($data['model_name']);
+        }
+
         
     }
 

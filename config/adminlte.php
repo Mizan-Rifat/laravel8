@@ -285,6 +285,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'CRUD',
+            'url'  => 'admin/crud',
+            'icon' => 'fas fa-th',
+        ],
 
 
 

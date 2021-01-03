@@ -29,34 +29,51 @@ use Illuminate\Support\Facades\Storage;
 Route::get('/', function () {
     return view('test');
 });
+Route::get('admin/crud', function () {
+    return view('admin.crud.crud');
+});
 
 Route::get('/clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('config:cache');
 });
 
-Route::post('/test', function (Request $request) {
+Route::post('/crud', function (Request $request) {
     $columns = [];
+    $table = [];
 
-    foreach ($request->name as $i => $name) {
-        $array = [
-            'name'=>$name,
-            'type'=>$request->type[$i],
-            'nullable'=>$request->nullable[$i],
-            'default'=>$request->default[$i]
-        ];
+    $fields['migration'] = $request->migration;
+    $fields['model'] = $request->model;
+    $fields['controller'] = $request->controller;
+    $fields['formRequest'] = $request->formRequest;
+    $fields['routes'] = $request->routes;
+    $fields['permissions'] = $request->permissions;
 
-        array_push($columns,$array);
+    // return $request;
+
+    if($request->migration){
+
+        foreach ($request->name as $i => $name) {
+            $array = [
+                'name'=>$name,
+                'type'=>$request->type[$i],
+                'nullable'=>$request->nullable[$i],
+                'default'=>$request->default[$i]
+            ];
+
+            array_push($columns,$array);
+        }
+
+        $table['name'] = $request->table_name;
+        $table['id'] = $request->id;
+        $table['timestamps'] = $request->timestamps;
+        $table['columns'] = $columns;
     }
-
-    $table['name'] = $request->table_name;
-    $table['id'] = $request->id;
-    $table['timestamps'] = $request->timestamps;
-    $table['columns'] = $columns;
 
     $data = [
         'model_name'=>$request->model_name,
         'table'=>$table,
+        'fields'=>$fields,
     ];
 
     return Artisan::call('crud:generator', ['data'=>$data]);
