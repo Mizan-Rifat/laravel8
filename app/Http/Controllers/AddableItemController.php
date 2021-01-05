@@ -39,7 +39,7 @@ class AddableItemController extends Controller
             'image'=>json_encode($images),
         ]);
 
-        return redirect()->route('addableitem.index')->with('message', 'Created Successfully!');
+        return redirect()->route('addableitems.index')->with('message', 'Created Successfully!');
     }
 
     public function show(AddableItem $addableItem)
@@ -97,7 +97,7 @@ class AddableItemController extends Controller
         ]);
 
 
-        return redirect()->route('addableitem.index')->with('message', 'Updated Successfully!');
+        return redirect()->route('addableitems.index')->with('message', 'Updated Successfully!');
     }
 
     public function destroy(AddableItem $addableItem)
@@ -112,7 +112,7 @@ class AddableItemController extends Controller
     public function bulkDestroy(Request $request){
 
         AddableItem::destroy($request->ids);
-        return redirect()->route('addableitem.index')->with('message', 'Deleted Successfully!');
+        return redirect()->route('addableitems.index')->with('message', 'Deleted Successfully!');
     }
 
     public function removeImage(){

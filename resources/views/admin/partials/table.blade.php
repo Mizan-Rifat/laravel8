@@ -1,3 +1,10 @@
+@php
+
+  $allFields = array_filter($allFields,function($field){
+    return $field['indexShow'];
+  });
+
+@endphp
 
 <div class="card">
        

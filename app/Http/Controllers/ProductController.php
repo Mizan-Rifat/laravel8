@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\AddableItem;
 use App\Models\Category;
 use App\Models\Ingredient;
+use App\Models\NutritionalItem;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -17,8 +18,8 @@ class ProductController extends Controller
     {
 
         $dataType = 'product';
-        $data = Product::with('category','ingredients','addableItems')->get();
-
+        $data = Product::with('category','ingredients','addableItems','nutritionalValues')->get();
+// return $data;
         return view('admin.bread.index',compact(
             'data',
             'dataType'
@@ -53,9 +54,11 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $product->load('category');
+        $product->load('category','nutritionalValues');
         $dataType = 'product';
         $data = $product;
+
+        return $product;
 
         return view('admin.bread.show',compact(
             'data',
@@ -66,14 +69,17 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
 
-        $product->load('category','ingredients','addableItems');
+        $product->load('category','ingredients','addableItems','nutritionalValues');
         
         $dataType = 'product';
         $data = $product;
+
+
     
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
         $addableItems = AddableItem::all();
+        $nutritionalItems = NutritionalItem::all();
   
         return view('admin.bread.add-edit',compact(
             'data',
@@ -81,6 +87,7 @@ class ProductController extends Controller
             'categories',
             'ingredients',
             'addableItems',
+            'nutritionalItems',
 
         ));
     }
@@ -100,11 +107,11 @@ class ProductController extends Controller
         ));
     }
 
-    public function update(ProductRequest $request)
+    public function update(Request $request)
     {
+return $request;
 
         $product = Product::findOrFail($request->id);
-
 
         $productImages = $product->image == null ? [] : json_decode($product->image);
 
@@ -117,6 +124,7 @@ class ProductController extends Controller
 
         $product->ingredients()->sync($request->ingredients);
         $product->addableItems()->sync($request->addableItems);
+        $product->nutritionalValues()->sync(json_decode($request->nutritionalValues,true));
 
         $product->update([
             'name'=>$request->name,

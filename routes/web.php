@@ -12,7 +12,10 @@ use Illuminate\Support\Str;
 
 use Akaunting\Money\Money;
 use Akaunting\Money\Currency;
+use App\Http\Requests\ProductRequest;
 use App\Models\Currency as ModelsCurrency;
+use App\Models\NutritionalItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -85,7 +88,9 @@ Route::post('/crud', function (Request $request) {
 
 Route::get('/test', function () {
 
-    return pluralDatatype('AddableItem');
+    return str_replace(' ', '','asda asdasd');
+
+    return Product::find(4)->nutritionalValues()->sync([2=>['value'=>'10gm'],3=>['value'=>'20gm']]);
 
 });
 
@@ -162,6 +167,17 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('/update', [App\Http\Controllers\PermissionController::class, 'update'])->name('permissions.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\PermissionController::class, 'bulkdestroy'])->name('permissions.bulkdestroy');
     });
+    
+    Route::group(['prefix'=>'nutritionalitem'],function(){
+        Route::get('/', [App\Http\Controllers\NutritionalItemController::class, 'index'])->name('nutritionalitems.index');
+        Route::get('/create', [App\Http\Controllers\NutritionalItemController::class, 'create'])->name('nutritionalitems.create');
+        Route::get('/show/{nutritionalItem}', [App\Http\Controllers\NutritionalItemController::class, 'show'])->name('nutritionalitems.show');
+        Route::get('/edit/{nutritionalItem}', [App\Http\Controllers\NutritionalItemController::class, 'edit'])->name('nutritionalitems.edit');
+        Route::get('/destroy/{nutritionalItem}', [App\Http\Controllers\NutritionalItemController::class, 'destroy'])->name('nutritionalitems.destroy');
+        Route::post('/store', [App\Http\Controllers\NutritionalItemController::class, 'store'])->name('nutritionalitems.store');
+        Route::post('/update', [App\Http\Controllers\NutritionalItemController::class, 'update'])->name('nutritionalitems.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\NutritionalItemController::class, 'bulkdestroy'])->name('nutritionalitems.bulkdestroy');
+    });
 
 
 
@@ -170,4 +186,3 @@ Route::group(['prefix'=>'admin'],function(){
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-

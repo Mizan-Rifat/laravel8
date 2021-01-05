@@ -1,6 +1,5 @@
 
 @php
-
 $fields = [];
 
 foreach($allFields as $field){
@@ -15,7 +14,24 @@ foreach($allFields as $field){
     }
     elseif($field['type'] == 'relationship-multi-select'){
         $field['type']='multi-select';
-        $field['options'] = ${$field['edit_field']};
+        $field['options'] = ${$field['edit_field']}->map(function($item) use($field){
+            return [
+                'id'=>$item->id,
+                'name'=>$item->{$field['relationship_field']},
+            ];
+        });
+        $field['value'] = isset($data) ? $data->{$field['field']}->pluck('id')->toArray() : [];
+    }
+    elseif($field['type'] == 'relationship-multi-select-pivot'){
+
+        $field['options'] = ${$field['edit_field']}->map(function($item) use($field){
+            return [
+                'id'=>$item->id,
+                'name'=>$item->{$field['relationship_field']},
+            ];
+        });
+        $field['pivotPartials'] = $field['pivot_partials'];
+        $field['pivotData'] = isset($data) ? $data->{$field['field']} : [];
         $field['value'] = isset($data) ? $data->{$field['field']}->pluck('id')->toArray() : [];
     }else{
         $field['value'] = isset($data) ? $data->{$field['edit_field']} : false;
@@ -23,6 +39,8 @@ foreach($allFields as $field){
     }
     
     array_push($fields,$field);
+
+   
 
 }
 
@@ -64,6 +82,7 @@ foreach($allFields as $field){
         action="{{ isset($data) ? route(get_route($dataType,'update')) : route(get_route($dataType,'store'))}}" 
         role="form"
         enctype="multipart/form-data"
+        id='form'
     >
         
         @csrf
@@ -71,11 +90,15 @@ foreach($allFields as $field){
 
             @foreach($fields as $field)
 
+            
+
                 @php
                     $label = $field['label'];
                     $type = $field['type'];
                     $value = $field['value'];
                     $column = $field['column'];
+                    $pivotPartials = array_key_exists('pivotPartials',$field) ? $field['pivot_partials'] : null;
+                    $pivotData = array_key_exists('pivotData',$field) ? $field['pivotData'] : null;
                     $options = array_key_exists('options',$field) ? $field['options'] : null;
                 @endphp
 
@@ -100,12 +123,26 @@ foreach($allFields as $field){
                 @endif
 
                 @if($field['type'] == 'multi-select')
-                    <x-multiSelect 
+                    <x-multiSelect
                         :label='$label'
                         :options='$options'
                         :name='$column'
                         :value='$value'  
                     />
+
+                @endif
+
+                @if($field['type'] == 'relationship-multi-select-pivot')
+            
+                    <x-multiSelectPivot 
+                        :label='$label'
+                        :options='$options'
+                        :name='$column'
+                        :value='$value'  
+                        :pivotData='$pivotData'  
+                    />
+
+                    @include('admin.partials.'.$pivotPartials)
 
                 @endif
 
@@ -175,3 +212,13 @@ foreach($allFields as $field){
 </div>
 
 @endsection
+
+
+@section('js')
+<script>
+
+
+
+</script>
+ @parent
+@stop

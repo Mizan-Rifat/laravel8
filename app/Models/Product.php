@@ -28,6 +28,9 @@ class Product extends Model
     public function addableItems(){
         return $this->belongsToMany(AddableItem::class,'products_addable_items');
     }
+    public function nutritionalValues(){
+        return $this->belongsToMany(NutritionalItem::class,'products_nutritional_values','product_id','item_id')->withPivot('value');
+    }
 
     public function getActiveAttribute($value){
         return $value == 0 ? 'No' : 'Yes';
