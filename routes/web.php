@@ -105,7 +105,7 @@ Route::group(['prefix'=>'admin'],function(){
     Route::get('/roles/{role}', [App\Http\Controllers\RoleController::class, 'show'])->name('roles.show');
     Route::get('/roles/delete/{role}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('roles.destroy');
     Route::get('/roles/edit/{role}', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
-    Route::post('/roles/update', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
+    Route::post('/roles/update/{role}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
     Route::post('/roles/bulkdelete', [App\Http\Controllers\RoleController::class, 'bulkDestroy'])->name('roles.bulkdestroy');
 
 
@@ -116,7 +116,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/edit/{category}', [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
         Route::get('/destroy/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
         Route::post('/store', [App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
-        Route::post('/update', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
+        Route::post('/update/{category}', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\CategoryController::class, 'bulkdestroy'])->name('categories.bulkdestroy');
     });
 
@@ -128,7 +128,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/edit/{product}', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
         Route::get('/destroy/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
         Route::post('/store', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
-        Route::post('/update', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
+        Route::post('/update/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\ProductController::class, 'bulkdestroy'])->name('products.bulkdestroy');
         Route::post('/removeimage/{product}', [App\Http\Controllers\ProductController::class, 'removeImage'])->name('products.removeimage');
     });
@@ -141,7 +141,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/edit/{ingredient}', [App\Http\Controllers\IngredientController::class, 'edit'])->name('ingredients.edit');
         Route::get('/destroy/{ingredient}', [App\Http\Controllers\IngredientController::class, 'destroy'])->name('ingredients.destroy');
         Route::post('/store', [App\Http\Controllers\IngredientController::class, 'store'])->name('ingredients.store');
-        Route::post('/update', [App\Http\Controllers\IngredientController::class, 'update'])->name('ingredients.update');
+        Route::post('/update/{ingredient}', [App\Http\Controllers\IngredientController::class, 'update'])->name('ingredients.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\IngredientController::class, 'bulkdestroy'])->name('ingredients.bulkdestroy');
     });
 
@@ -152,7 +152,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/edit/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'edit'])->name('addableitems.edit');
         Route::get('/destroy/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'destroy'])->name('addableitems.destroy');
         Route::post('/store', [App\Http\Controllers\AddableItemController::class, 'store'])->name('addableitems.store');
-        Route::post('/update', [App\Http\Controllers\AddableItemController::class, 'update'])->name('addableitems.update');
+        Route::post('/update/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'update'])->name('addableitems.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\AddableItemController::class, 'bulkdestroy'])->name('addableitems.bulkdestroy');
         Route::post('/removeimage/{addableItem}', [App\Http\Controllers\AddableItemController::class, 'removeImage'])->name('addableitems.removeimage');
     });
@@ -164,7 +164,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/edit/{permission}', [App\Http\Controllers\PermissionController::class, 'edit'])->name('permissions.edit');
         Route::get('/destroy/{permission}', [App\Http\Controllers\PermissionController::class, 'destroy'])->name('permissions.destroy');
         Route::post('/store', [App\Http\Controllers\PermissionController::class, 'store'])->name('permissions.store');
-        Route::post('/update', [App\Http\Controllers\PermissionController::class, 'update'])->name('permissions.update');
+        Route::post('/update/{permission}', [App\Http\Controllers\PermissionController::class, 'update'])->name('permissions.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\PermissionController::class, 'bulkdestroy'])->name('permissions.bulkdestroy');
     });
     
@@ -175,7 +175,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/edit/{nutritionalItem}', [App\Http\Controllers\NutritionalItemController::class, 'edit'])->name('nutritionalitems.edit');
         Route::get('/destroy/{nutritionalItem}', [App\Http\Controllers\NutritionalItemController::class, 'destroy'])->name('nutritionalitems.destroy');
         Route::post('/store', [App\Http\Controllers\NutritionalItemController::class, 'store'])->name('nutritionalitems.store');
-        Route::post('/update', [App\Http\Controllers\NutritionalItemController::class, 'update'])->name('nutritionalitems.update');
+        Route::post('/update/{nutritionalItem}', [App\Http\Controllers\NutritionalItemController::class, 'update'])->name('nutritionalitems.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\NutritionalItemController::class, 'bulkdestroy'])->name('nutritionalitems.bulkdestroy');
     });
 

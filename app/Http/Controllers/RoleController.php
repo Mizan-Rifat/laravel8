@@ -53,9 +53,8 @@ class RoleController extends Controller
         ));
     }
 
-    public function update(Request $request){
+    public function update(Request $request,Role $role){
 
-        $role = Role::findOrFail($request->id);
         $validatedData = $request->validate([
             'display_name' => ['string'],
             'name' => [

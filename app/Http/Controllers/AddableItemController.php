@@ -77,9 +77,8 @@ class AddableItemController extends Controller
         
     }
 
-    public function update(Request $request)
+    public function update(Request $request,AddableItem $addableitem)
     {
-        $addableitem = AddableItem::findOrFail($request->id);
 
         $addableitemImages = $addableitem->image == null ? [] : json_decode($addableitem->image);
 

@@ -161,7 +161,7 @@ class CRUDGenerator extends Command
 
             if($key == 'index'){
                 $route = "";
-            }elseif($key == "show" || $key == "edit" || $key == "destroy"){
+            }elseif($key == "show" || $key == "edit" || $key == "destroy" || $key == "update"){
                 $route = $key."/{".singularDatatype($name)."}";
             }else{
                 $route = $key;

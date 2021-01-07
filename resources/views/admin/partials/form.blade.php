@@ -37,7 +37,7 @@ foreach($allFields as $field){
 
 <form 
         method="post" 
-        action="{{ isset($data) ? route(get_route($dataType,'update')) : route(get_route($dataType,'store'))}}" 
+        action="{{ isset($data) ? route(get_route($dataType,'update'),[$dataType=>$data->id]) : route(get_route($dataType,'store'))}}" 
         role="form"
         enctype="multipart/form-data"
         id='form'
@@ -130,9 +130,6 @@ foreach($allFields as $field){
 
             @endforeach
 
-            @if(isset($data))
-                <input type="hidden" name='id' value="{{$data->id}}">
-            @endif
 
         </div>
 

@@ -60,9 +60,8 @@ class NutritionalItemController extends Controller
         ));
     }
 
-    public function update(Request $request)
+    public function update(Request $request,NutritionalItem $nutritionalItem)
     {
-        $nutritionalItem = NutritionalItem::findOrFail($request->id);
 
         $nutritionalItem->update($request->all());
 

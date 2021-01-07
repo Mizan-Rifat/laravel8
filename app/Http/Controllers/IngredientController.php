@@ -60,9 +60,8 @@ class IngredientController extends Controller
         ));
     }
 
-    public function update(Request $request)
+    public function update(Request $request,Ingredient $ingredient)
     {
-        $ingredient = Ingredient::findOrFail($request->id);
 
         $ingredient->update($request->all());
 

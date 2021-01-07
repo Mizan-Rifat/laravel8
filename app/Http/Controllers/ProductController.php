@@ -109,10 +109,9 @@ class ProductController extends Controller
         ));
     }
 
-    public function update(Request $request)
+    public function update(Request $request,Product $product)
     {
 
-        $product = Product::findOrFail($request->id);
 
         $productImages = $product->image == null ? [] : json_decode($product->image);
 
