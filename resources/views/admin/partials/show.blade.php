@@ -69,6 +69,12 @@ foreach($allFields as $field){
                         @foreach($field['value'] as $item)
                             <li>{{$item}}</li>
                         @endforeach
+                    </ul> 
+                @elseif($field['type'] == 'multi-select-pivot')
+                    <ul style="padding-left: 20px;">
+                        @foreach($field['value'] as $item)
+                            <li>{{$item->title}} - {{$item->pivot->value}}</li>
+                        @endforeach
                     </ul>
                 @else
                     <p>{{ $field['value'] }}</p>

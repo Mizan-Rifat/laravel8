@@ -49,7 +49,9 @@ class ProductController extends Controller
         $product->ingredients()->sync($request->ingredients);
         $product->addableItems()->sync($request->addableItems);
 
-        return redirect()->route('product.index')->with('message', 'Created Successfully!');
+        return redirect()->route('nutritionalvalues.edit',['product'=>$product->id]);
+
+        return redirect()->route('products.index')->with('message', 'Created Successfully!');
     }
 
     public function show(Product $product)
@@ -58,7 +60,7 @@ class ProductController extends Controller
         $dataType = 'product';
         $data = $product;
 
-        return $product;
+        // return $product;
 
         return view('admin.bread.show',compact(
             'data',
@@ -109,7 +111,6 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-return $request;
 
         $product = Product::findOrFail($request->id);
 
@@ -124,7 +125,6 @@ return $request;
 
         $product->ingredients()->sync($request->ingredients);
         $product->addableItems()->sync($request->addableItems);
-        $product->nutritionalValues()->sync(json_decode($request->nutritionalValues,true));
 
         $product->update([
             'name'=>$request->name,
@@ -136,7 +136,7 @@ return $request;
         ]);
         
 
-        return redirect()->route('products.index')->with('message', 'Updated Successfully!');
+        return redirect()->route('nutritionalvalues.edit',['product'=>$product->id]);
     }
 
     public function destroy(Product $product)

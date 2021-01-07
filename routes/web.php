@@ -179,6 +179,11 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('/bulkdestroy', [App\Http\Controllers\NutritionalItemController::class, 'bulkdestroy'])->name('nutritionalitems.bulkdestroy');
     });
 
+    Route::group(['prefix'=>'product/nutritionalvalue'],function(){
+        Route::get('/edit/{product}', [App\Http\Controllers\NutritionalValueController::class, 'edit'])->name('nutritionalvalues.edit');
+        Route::post('/update/{product}', [App\Http\Controllers\NutritionalValueController::class, 'update'])->name('nutritionalvalues.update');
+    });
+
 
 
    

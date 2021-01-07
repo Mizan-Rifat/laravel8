@@ -2,11 +2,14 @@
 
 return [
     'users'=>[
+        'nextBtn'=>false,
         'fields'=>[
             'label'=>''
         ],
     ],
+
     'categories'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [   
                 'label'=>'Name',
@@ -18,7 +21,9 @@ return [
             ]
         ],
     ],
+
     'roles'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [
                 'label'=>'Name',
@@ -39,7 +44,9 @@ return [
             
         ],
     ],
+
     'permissions'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [
                 'label'=>'Title',
@@ -60,7 +67,9 @@ return [
             
         ],
     ],
+
     'ingredients'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [
                 'label'=>'Name',
@@ -73,7 +82,9 @@ return [
             
         ],
     ],
+
     'players'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [
                 'label'=>'Name',
@@ -86,7 +97,9 @@ return [
             
         ],
     ],
+
     'nutritionalItems'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [
                 'label'=>'Title',
@@ -99,7 +112,9 @@ return [
             
         ],
     ],
+
     'addableItems'=>[
+        'nextBtn'=>false,
         'fields'=>[
             [
                 'label'=>'Name',
@@ -130,6 +145,7 @@ return [
     ],
 
     'products'=>[
+        'nextBtn'=>true,
         'fields'=>[
             [
                 'label'=>'Name',
@@ -171,12 +187,10 @@ return [
             ],
             [
                 'label'=>'Nutritional Values',
-                'column'=>'nutritionalValues',
+                'column'=>'addableItems',
                 'field'=>'nutritionalValues',
-                'edit_field'=>'nutritionalItems',
-                'type'=>'relationship-multi-select-pivot',
-                'relationship_field'=>'title',
-                'pivot_partials'=>'product-nutritionValues',
+                'edit_field'=>'addableItems',
+                'type'=>'multi-select-pivot',
                 "indexShow"=>false,
                 
             ],
@@ -212,6 +226,8 @@ return [
                 'type'=>'switch',
                 "indexShow"=>true,
             ],
+            
         ]
-    ]
+    ],
+
 ];

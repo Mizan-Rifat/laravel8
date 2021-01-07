@@ -21,18 +21,6 @@ foreach($allFields as $field){
             ];
         });
         $field['value'] = isset($data) ? $data->{$field['field']}->pluck('id')->toArray() : [];
-    }
-    elseif($field['type'] == 'relationship-multi-select-pivot'){
-
-        $field['options'] = ${$field['edit_field']}->map(function($item) use($field){
-            return [
-                'id'=>$item->id,
-                'name'=>$item->{$field['relationship_field']},
-            ];
-        });
-        $field['pivotPartials'] = $field['pivot_partials'];
-        $field['pivotData'] = isset($data) ? $data->{$field['field']} : [];
-        $field['value'] = isset($data) ? $data->{$field['field']}->pluck('id')->toArray() : [];
     }else{
         $field['value'] = isset($data) ? $data->{$field['edit_field']} : false;
 
@@ -46,38 +34,8 @@ foreach($allFields as $field){
 
 @endphp
 
-@section('title', pluralTitle($dataType))
 
-@section('plugins.Select2', true)
-@section('plugins.SummerNote', true)
-
-@section('content_header')
-<h1>{{ pluralTitle($dataType) }}</h1>
-
-
-<div class="mt-3 text-right">
-    <a class="btn btn-warning m-1" href="{{ route( get_route($dataType,'index')) }}">
-        <i class="fas fa-list">
-        </i>
-        Back To List
-    </a>
-</div>
-@stop
-
-@section('content')
-
-@if ($errors->any())
- @foreach ($errors->all() as $error)
-     <div>{{$error}}</div>
- @endforeach
-@endif
-
-<div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title">{{isset($data) ? 'Edit' : 'Add' }} {{ singularTitle($dataType) }} </h3>
-    </div>
-
-    <form 
+<form 
         method="post" 
         action="{{ isset($data) ? route(get_route($dataType,'update')) : route(get_route($dataType,'store'))}}" 
         role="form"
@@ -97,8 +55,6 @@ foreach($allFields as $field){
                     $type = $field['type'];
                     $value = $field['value'];
                     $column = $field['column'];
-                    $pivotPartials = array_key_exists('pivotPartials',$field) ? $field['pivot_partials'] : null;
-                    $pivotData = array_key_exists('pivotData',$field) ? $field['pivotData'] : null;
                     $options = array_key_exists('options',$field) ? $field['options'] : null;
                 @endphp
 
@@ -129,20 +85,6 @@ foreach($allFields as $field){
                         :name='$column'
                         :value='$value'  
                     />
-
-                @endif
-
-                @if($field['type'] == 'relationship-multi-select-pivot')
-            
-                    <x-multiSelectPivot 
-                        :label='$label'
-                        :options='$options'
-                        :name='$column'
-                        :value='$value'  
-                        :pivotData='$pivotData'  
-                    />
-
-                    @include('admin.partials.'.$pivotPartials)
 
                 @endif
 
@@ -203,15 +145,15 @@ foreach($allFields as $field){
 
         
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="card-footer text-right">
+            <button type="submit" class="btn btn-primary">
+
+                {{ config("datatypes.".pluralDatatype($dataType))['nextBtn'] != null ? "Next" : 'Submit' }}
+
+            </button>
         </div>
 
     </form>
-
-</div>
-
-@endsection
 
 
 @section('js')
