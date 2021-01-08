@@ -8,6 +8,44 @@ return [
         ],
     ],
 
+    'users'=>[
+        'nextBtn'=>false,
+        'fields'=>[
+            [   
+                'label'=>'Name',
+                'column'=>'name',
+                'field'=>'name',
+                'edit_field'=>'name',
+                'type'=>'text',
+                "indexShow"=>true,
+            ],
+            [   
+                'label'=>'Email',
+                'column'=>'email',
+                'field'=>'email',
+                'edit_field'=>'email',
+                'type'=>'text',
+                "indexShow"=>true,
+            ],
+            [   
+                'label'=>'Avatar',
+                'column'=>'avatar',
+                'field'=>'avatar',
+                'edit_field'=>'avatar',
+                'type'=>'image',
+                "indexShow"=>true,
+            ],
+            [   
+                'label'=>'Password',
+                'column'=>'password',
+                'field'=>'password',
+                'edit_field'=>'password',
+                'type'=>'text',
+                "indexShow"=>false,
+            ],
+        ],
+    ],
+
     'categories'=>[
         'nextBtn'=>false,
         'fields'=>[
@@ -129,7 +167,7 @@ return [
                 'column'=>'image',
                 'field'=>'image',
                 'edit_field'=>'image',
-                'type'=>'image',
+                'type'=>'images',
                 "indexShow"=>true,
             ],
             [
@@ -199,7 +237,7 @@ return [
                 'column'=>'image',
                 'field'=>'image',
                 'edit_field'=>'image',
-                'type'=>'image',
+                'type'=>'images',
                 "indexShow"=>true,
             ],
             [

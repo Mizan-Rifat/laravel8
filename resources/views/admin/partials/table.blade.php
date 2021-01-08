@@ -46,11 +46,15 @@
 
                       @foreach($allFields as $field)
 
-                        @if($field['type'] == 'image')
+                        @if($field['type'] == 'images')
                             <td>
                               <img src="{{ asset(json_decode( $item->{$field['field']} )[0] ?? null ) }}" alt="" style="width:80px">
                             </td>
 
+                        @elseif($field['type'] == 'image')
+                            <td>
+                            <img src="{{ asset($item->{$field['field']}) }}" alt="" style="width:80px">
+                            </td>
                         @elseif($field['type'] == 'select')
                             <td>
                               {{ $item->{$field['field']}->{$field['relationship_field']} }}

@@ -258,6 +258,11 @@ return [
             'url'  => 'admin/roles',
             'icon' => 'fas fa-user-lock',
         ],
+        [
+            'text' => 'Permissions',
+            'url'  => 'admin/permission',
+            'icon' => 'fas fa-user-lock',
+        ],
         // ['header' => 'Category'],
         [
             'text' => 'Category',
@@ -283,6 +288,11 @@ return [
                     'url'  => 'admin/addableitem',
                     'icon' => 'fas fa-th',
                 ],
+                [
+                    'text' => 'Nutritional Items',
+                    'url'  => 'admin/nutritionalitem',
+                    'icon' => 'fas fa-th',
+                ],
             ],
         ],
         [
@@ -298,7 +308,7 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

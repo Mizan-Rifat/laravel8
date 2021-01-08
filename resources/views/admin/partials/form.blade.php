@@ -3,9 +3,12 @@
 $fields = [];
 
 foreach($allFields as $field){
-    if($field['type'] == 'image'){
+    if($field['type'] == 'images'){
         $field['value'] = isset($data) && $data->image != null ? json_decode($data->image) : [];
 
+    }
+    elseif($field['type'] == 'image'){
+        $field['value'] = isset($data) ? $data->{$field['field']} : [];
     }
     elseif($field['type'] == 'relationship-select'){
         $field['type']='select';
@@ -106,9 +109,7 @@ foreach($allFields as $field){
 
                 @endif
 
-                @if($field['type'] == 'image')
-
-                   
+                @if($field['type'] == 'images')
 
                     @if(isset($data))
                         @php
@@ -116,6 +117,26 @@ foreach($allFields as $field){
                         @endphp
                         <x-gallery 
                             :images='$value'
+                            :label='$label'
+                            :removeRoute="get_route($dataType,'removeimage')"
+                            :arg="$arg"
+                        />
+                    @endif
+                    <x-imageUploader
+                        label='Upload Image'
+                        :images='$value' 
+                    />
+
+                @endif
+
+                @if($field['type'] == 'image')
+
+                    @if(isset($data))
+                        @php
+                            $arg = [$dataType=>$data->id];
+                        @endphp
+                        <x-gallery 
+                            :images='[$value]'
                             :label='$label'
                             :removeRoute="get_route($dataType,'removeimage')"
                             :arg="$arg"

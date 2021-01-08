@@ -109,10 +109,11 @@ class ProductController extends Controller
         ));
     }
 
-    public function update(Request $request,Product $product)
+    public function update(ProductRequest $request,Product $product)
     {
 
-
+        return $request;
+        
         $productImages = $product->image == null ? [] : json_decode($product->image);
 
         if($files=$request->file('images')){

@@ -16,6 +16,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Currency as ModelsCurrency;
 use App\Models\NutritionalItem;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
+
     return view('test');
 });
 Route::get('admin/crud', function () {
@@ -98,6 +100,22 @@ Auth::routes();
 
 Route::group(['prefix'=>'admin'],function(){
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
+
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('admin.profile');
+
+    Route::group(['prefix'=>'user'],function(){
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+        Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+        Route::get('/show/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+        Route::get('/edit/{user}', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+        Route::get('/destroy/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+        Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+        Route::post('/update/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+        Route::post('/bulkdestroy', [App\Http\Controllers\UserController::class, 'bulkdestroy'])->name('users.bulkdestroy');
+        Route::post('/removeimage/{user}', [App\Http\Controllers\ProfileController::class, 'removeImage'])->name('users.removeimage');
+    });
+
+
 
     Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/create', [App\Http\Controllers\RoleController::class, 'create'])->name('roles.create');

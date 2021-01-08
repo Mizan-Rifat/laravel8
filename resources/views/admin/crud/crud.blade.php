@@ -200,7 +200,7 @@
         })
 
         $(document).on("click", "button#removeColumn" , function() {
-            // console.log('sdfsdfsdf');
+            
             $(this).parent().remove();
         });
 
