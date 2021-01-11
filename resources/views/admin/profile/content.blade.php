@@ -10,10 +10,17 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <input id="profile-image-upload" class="hidden" type="file" >
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="{{ asset('images/avatars/'.$user->avatar) }}"
-                       alt="User profile picture">
+
+                  
+
+                  <!-- <form id='dpForm' action="{{ route('users.update',['user'=>Auth::user()]) }}" method="post" enctype="multipart/form-data"> -->
+                  @include('admin.profile.imageUpload')
+
+                  
+
+
+                  
+
                 </div>
 
                 <h3 class="profile-username text-center">{{ $user->name }}</h3>
@@ -39,6 +46,7 @@
 
                 <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
               </div>
+
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -49,22 +57,24 @@
           <div class="col-md-9">
             <div class="card">
               <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                </ul>
-              </div><!-- /.card-header -->
+
+                    <h5 class="card-title">  
+                      {{ Route::currentRouteName() == 'profile.password_change' ? 'Password' : 'General Info' }}
+                    </h5>
+              </div>
+
               <div class="card-body">
-                <div class="tab-content">
 
                   <div class="active tab-pane" id="activity">
-                      @include('admin.profile.edit-form')
+
+                      @if(Route::currentRouteName() == 'profile.password_change')
+                          @include('admin.profile.password')
+                      @else
+                        @include('admin.profile.edit-form')
+                      @endif
+
                   </div>
-                  <div class="tab-pane" id="timeline">
-                    @include('admin.profile.password')
-                  </div>
-                </div>
-                <!-- /.tab-content -->
+
               </div>
             </div>
             <!-- /.nav-tabs-custom -->
@@ -79,11 +89,7 @@
 @section('js')
   <script>
           
-          $(function() {
-              $('.profile-user-img').on('click', function() {
-                  $('#profile-image-upload').click();
-              });
-          });
+          
 
 
   </script>

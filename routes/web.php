@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
 
-    return view('test');
+    return view('admin.test');
 });
 Route::get('admin/crud', function () {
     return view('admin.crud.crud');
@@ -90,18 +90,32 @@ Route::post('/crud', function (Request $request) {
 
 Route::get('/test', function () {
 
-    return str_replace(' ', '','asda asdasd');
+    $permission = Permission::find(59);
+    // return $permission->roles;
+    $user = Auth::user();
+    return [$user->hasPermissionTo($permission)];
 
-    return Product::find(4)->nutritionalValues()->sync([2=>['value'=>'10gm'],3=>['value'=>'20gm']]);
+    return Storage::delete('/avatars/4TbaiufTRj.png');
 
 });
 
+Route::post('/test', [App\Http\Controllers\HomeController::class,'test'])->name('test');
+
 Auth::routes();
 
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+
+    Route::get('/test', function () {
+
+        return view('admin.test');
+    
+    });
+    
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.home');
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('admin.profile');
+    Route::get('/profile/change_password', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.password_change');
+    Route::post('/profile/change_avatar/{user}', [App\Http\Controllers\ProfileController::class, 'updateAvatar'])->name('profile.update_avatar');
 
     Route::group(['prefix'=>'user'],function(){
         Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');

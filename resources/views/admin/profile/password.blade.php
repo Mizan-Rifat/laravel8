@@ -57,7 +57,8 @@
 
     <div class="form-group row">
         <div class="offset-sm-2 col-sm-10 text-right">
-            <button type="submit" class="btn btn-danger">Submit</button>
+        <a href="{{ route('admin.profile') }}" class="btn btn-danger">Back</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 </form>

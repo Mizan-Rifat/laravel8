@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -65,12 +66,18 @@ class UserController extends Controller
     public function update(UserRequest $request,User $user)
     {
 
-        return $request;
-        $user = User::findOrFail($request->id);
 
-        $user->update($request->all());
+        $validatedData = $request->validated();
+        unset($validatedData['old_password']);
 
-        return redirect()->route('users.index')->with('message', 'Updated Successfully!');
+        if(isset($validatedData['password'])){
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
+
+        $user->update($validatedData);
+
+        return redirect()->back()->with('message', 'Updated Successfully!');
+        // return redirect()->route('users.index')->with('message', 'Updated Successfully!');
     }
 
     public function destroy(User $user)

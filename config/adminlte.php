@@ -292,6 +292,7 @@ return [
                     'text' => 'Nutritional Items',
                     'url'  => 'admin/nutritionalitem',
                     'icon' => 'fas fa-th',
+                    'can'=>'browse_nutritional_items'
                 ],
             ],
         ],
@@ -425,6 +426,38 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdn.datatables.net/1.10.22/js/jquery.dataTables.js',
+                ],
+            ],
+        ],
+        'Cropme' => [
+            'active' => false,
+            'files' => [
+                
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'js/cropme.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'css/cropme.min.css',
+                ],
+            ],
+        ],
+        'cropperjs' => [
+            'active' => true,
+            'files' => [
+                
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.css',
                 ],
             ],
         ],

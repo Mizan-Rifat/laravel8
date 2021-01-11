@@ -26,26 +26,21 @@ class UserRequest extends FormRequest
         ];
 
         $updateRules = [
-            // 'name'=>['string'],
-            // 'email' => ['email','unique:users,email,'.$this->user->id],
-            // 'avatar'=>['nullable','string'],
-            // 'password'=>['nullable','string'],
-
-            'name' => ['max:20','min:2','regex:/^[a-zA-Z ]+$/'],
+            'name' => ['max:20','min:5','regex:/^[a-zA-Z ]+$/'],
             'email' => ['email','unique:users,email,'.$this->user->id],
             'blocked' => ['boolean'],
             'old_password' => [
-                'nullable', function ($attribute, $value, $fail) {
+                function ($attribute, $value, $fail) {
                     if (!Hash::check($value, Auth::user()->password)) {
                         $fail('Old Password didn\'t match');
                     }
                 },
             ],
-            'password' => ['nullable','min:8'],
-            'fbID'=>['nullable','unique:users,fbID,'.$this->user->id]
+            'password' => ['string','min:8', 'confirmed'],
         ];
        return Route::currentRouteName() == 'users.store' ? $storeRules : $updateRules;
     }
+
 
     
 }

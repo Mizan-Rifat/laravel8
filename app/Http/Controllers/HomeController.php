@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -23,24 +25,20 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function product(){
-<<<<<<< HEAD
-=======
-        $actions = collect(['browse','create','read','update','delete']);
-        $tables = collect(['users','permissions','roles']);
+    public function test(Request $request){
+   
 
+        $image = $request->data;  // your base64 encoded
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        $imageName = Str::random(10).'.'.'png';
 
-        $data = $tables->crossJoin($actions);
+        // return $imageName;
 
-      return  $data->map(function($item){
-            return [
-                'title'=>$item[1].'_'.$item[0],
-                'table_name'=>$item[0],
-            ];
-        });
+        Storage::put('/avatars/'.$imageName, base64_decode($image));
 
+        return asset('/images/avatars/'.$imageName);
 
->>>>>>> role
-        return view('admin.product');
+        // \File::put(storage_path(). '/images' . $imageName, base64_decode($image));
     }
 }
