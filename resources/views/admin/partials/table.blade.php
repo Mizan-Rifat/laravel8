@@ -87,10 +87,7 @@
                       @endphp
 
                       <x-tableActions 
-
-                        :showroute="get_route($dataType,'show')"
-                        :editroute="get_route($dataType,'edit')"
-                        :destroyroute="get_route($dataType,'destroy')"
+                        :dataType='$dataType'
                         :arg="$arg"
 
                       />

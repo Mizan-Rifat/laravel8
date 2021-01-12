@@ -56,3 +56,12 @@ if (! function_exists('get_route')) {
 
     
 }
+if (! function_exists('get_gate_action')) {
+
+    function get_gate_action($model,$action)
+    {
+        return strtolower($action).'_'.Str::snake(Str::plural($model));
+    }
+
+    
+}

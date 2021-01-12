@@ -90,12 +90,7 @@ Route::post('/crud', function (Request $request) {
 
 Route::get('/test', function () {
 
-    $permission = Permission::find(59);
-    // return $permission->roles;
-    $user = Auth::user();
-    return [$user->hasPermissionTo($permission)];
-
-    return Storage::delete('/avatars/4TbaiufTRj.png');
+   return get_gate_action('Category','create');
 
 });
 

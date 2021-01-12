@@ -11,7 +11,10 @@
 @section('content_header')
     <h1>{{ pluralTitle($dataType) }}</h1>
 
-    <x-topAction :route="get_route(pluralDatatype($dataType),'create')" />
+    <x-topAction 
+        {{-- :route="get_route(pluralDatatype($dataType),'create')" --}}
+        :dataType='$dataType' 
+    />
     
 @stop
 

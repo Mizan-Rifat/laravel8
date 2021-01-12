@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AddableItem;
+use Illuminate\Support\Facades\Gate;
 
 class AddableItemController extends Controller
 {
     public function index()
     {
-        // $addableitems = AddableItem::all();
+        Gate::authorize(get_gate_action('AddableItem','browse'));
 
-
-        // return view('admin.addableitems.index')->with('addableitems',$addableitems);
         $dataType = 'addableItem';
         $data = AddableItem::all();
         
@@ -24,6 +23,8 @@ class AddableItemController extends Controller
 
     public function store(Request $request)
     {
+        Gate::authorize(get_gate_action('AddableItem','create'));
+
 
         $images = [];
         if($files=$request->file('images')){
@@ -44,6 +45,8 @@ class AddableItemController extends Controller
 
     public function show(AddableItem $addableItem)
     {
+        Gate::authorize(get_gate_action('AddableItem','read'));
+
         $dataType = 'addableItem';
         $data = $addableItem;
 
@@ -57,6 +60,8 @@ class AddableItemController extends Controller
     
     public function edit(AddableItem $addableItem)
     {
+        Gate::authorize(get_gate_action('AddableItem','update'));
+
         $dataType = 'addableItem';
         $data = $addableItem;
 
@@ -68,6 +73,8 @@ class AddableItemController extends Controller
 
     public function create()
     {
+        Gate::authorize(get_gate_action('AddableItem','create'));
+
         $dataType = 'addableItem';
         $data = null;
         return view('admin.bread.add-edit',compact(
@@ -79,6 +86,8 @@ class AddableItemController extends Controller
 
     public function update(Request $request,AddableItem $addableitem)
     {
+        Gate::authorize(get_gate_action('AddableItem','update'));
+
 
         $addableitemImages = $addableitem->image == null ? [] : json_decode($addableitem->image);
 
@@ -101,6 +110,8 @@ class AddableItemController extends Controller
 
     public function destroy(AddableItem $addableItem)
     {
+        Gate::authorize(get_gate_action('AddableItem','delete'));
+
         $addableItem->delete();
 
         return redirect()->route('addableitem.index')->with('message', 'Deleted Successfully!');
@@ -109,6 +120,8 @@ class AddableItemController extends Controller
 
 
     public function bulkDestroy(Request $request){
+
+        Gate::authorize(get_gate_action('AddableItem','delete'));
 
         AddableItem::destroy($request->ids);
         return redirect()->route('addableitems.index')->with('message', 'Deleted Successfully!');

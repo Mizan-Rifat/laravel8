@@ -9,6 +9,7 @@ use App\Models\Ingredient;
 use App\Models\NutritionalItem;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,6 +17,8 @@ class ProductController extends Controller
 {
     public function index()
     {
+
+        Gate::authorize(get_gate_action('Product','browse'));
 
         $dataType = 'product';
         $data = Product::with('category','ingredients','addableItems','nutritionalValues')->get();
@@ -28,6 +31,7 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
+        Gate::authorize(get_gate_action('Product','create'));
 
         $images = [];
         if($files=$request->file('images')){
@@ -56,6 +60,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        Gate::authorize(get_gate_action('Product','read'));
+
         $product->load('category','nutritionalValues');
         $dataType = 'product';
         $data = $product;
@@ -70,6 +76,7 @@ class ProductController extends Controller
     
     public function edit(Product $product)
     {
+        Gate::authorize(get_gate_action('Product','update'));
 
         $product->load('category','ingredients','addableItems','nutritionalValues');
         
@@ -96,6 +103,8 @@ class ProductController extends Controller
 
     public function create()
     {
+        Gate::authorize(get_gate_action('Product','create'));
+
         $dataType='product';
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
@@ -111,9 +120,8 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request,Product $product)
     {
+        Gate::authorize(get_gate_action('Product','update'));
 
-        return $request;
-        
         $productImages = $product->image == null ? [] : json_decode($product->image);
 
         if($files=$request->file('images')){
@@ -141,6 +149,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        Gate::authorize(get_gate_action('Product','delete'));
+
         $product->delete();
 
         return redirect()->route('products.index')->with('message', 'Deleted Successfully!');
@@ -150,16 +160,17 @@ class ProductController extends Controller
 
     public function bulkDestroy(Request $request){
 
+        Gate::authorize(get_gate_action('Product','delete'));
 
         Product::destroy($request->ids);
         return redirect()->route('products.index')->with('message', 'Deleted Successfully!');
     }
 
     public function removeImage(Product $product,Request $request){
+
+        Gate::authorize(get_gate_action('Product','update'));
+
         $images = json_decode($product->image);
-
-        
-
 
         if (($key = array_search($request->image, $images)) !== false) {
             unset($images[$key]);

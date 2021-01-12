@@ -42,10 +42,7 @@ foreach($allFields as $field){
     @endphp
 
     <x-showActions 
-
-        :indexroute="get_route($dataType,'index')"
-        :editroute="get_route($dataType,'edit')"
-        :destroyroute="get_route($dataType,'destroy')"
+        :dataType='$dataType'
         :arg="$arg"
 
     />

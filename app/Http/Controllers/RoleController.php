@@ -66,7 +66,7 @@ class RoleController extends Controller
         $role->update($validatedData);
         $role->permissions()->sync($request->permissions);
 
-        return redirect()->route('roles.index')->with('message', 'Updated Successfully!');
+        return redirect()->back()->with('message', 'Updated Successfully!');
 
     }
 

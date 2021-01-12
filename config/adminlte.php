@@ -277,16 +277,19 @@ return [
                     'text' => 'Products',
                     'url'  => 'admin/product',
                     'icon' => 'fas fa-th',
+                    'can'=>'browse_products'
                 ],
                 [
                     'text' => 'Ingredients',
                     'url'  => 'admin/ingredient',
                     'icon' => 'fas fa-th',
+                    'can'=>'browse_ingredients'
                 ],
                 [
                     'text' => 'Addable Item',
                     'url'  => 'admin/addableitem',
                     'icon' => 'fas fa-th',
+                    'can'=>'browse_addable_items'
                 ],
                 [
                     'text' => 'Nutritional Items',
