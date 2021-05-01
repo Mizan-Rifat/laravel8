@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Akaunting\Money\Money;
 use Akaunting\Money\Currency;
 use App\Http\Requests\ProductRequest;
+use App\Models\AddableItem;
 use App\Models\Currency as ModelsCurrency;
 use App\Models\NutritionalItem;
 use App\Models\Product;
@@ -90,6 +91,8 @@ Route::post('/crud', function (Request $request) {
 
 Route::get('/test', function () {
 
+    return AddableItem::find(1);
+
    return get_gate_action('Category','create');
 
 });
@@ -98,7 +101,7 @@ Route::post('/test', [App\Http\Controllers\HomeController::class,'test'])->name(
 
 Auth::routes();
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+Route::group(['prefix'=>'admin'],function(){
 
     Route::get('/test', function () {
 
@@ -138,13 +141,14 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 
     Route::group(['prefix'=>'category'],function(){
         Route::get('/', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories.index');
-        Route::get('/show/{category}', [App\Http\Controllers\CategoryController::class, 'show'])->name('categories.show');
+        
         Route::get('/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('categories.create');
         Route::get('/edit/{category}', [App\Http\Controllers\CategoryController::class, 'edit'])->name('categories.edit');
         Route::get('/destroy/{category}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('categories.destroy');
         Route::post('/store', [App\Http\Controllers\CategoryController::class, 'store'])->name('categories.store');
         Route::post('/update/{category}', [App\Http\Controllers\CategoryController::class, 'update'])->name('categories.update');
         Route::post('/bulkdestroy', [App\Http\Controllers\CategoryController::class, 'bulkdestroy'])->name('categories.bulkdestroy');
+        Route::get('/{category}', [App\Http\Controllers\CategoryController::class, 'show'])->name('categories.show');
     });
 
     Route::group(['prefix'=>'product'],function(){

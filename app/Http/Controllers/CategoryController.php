@@ -14,6 +14,8 @@ class CategoryController extends Controller
         $dataType = 'category';
         $data = Category::all();
 
+        return $data;
+
         return view('admin.bread.index',compact(
             'data',
             'dataType'

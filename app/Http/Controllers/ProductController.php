@@ -76,9 +76,12 @@ class ProductController extends Controller
     
     public function edit(Product $product)
     {
+
+        return $product;
+        
         Gate::authorize(get_gate_action('Product','update'));
 
-        $product->load('category','ingredients','addableItems','nutritionalValues');
+        $product->load('category','ingredients','addableItems');
         
         $dataType = 'product';
         $data = $product;
@@ -88,7 +91,9 @@ class ProductController extends Controller
         $categories = Category::get(['id','name']);
         $ingredients = Ingredient::get(['id','name']);
         $addableItems = AddableItem::all();
-        $nutritionalItems = NutritionalItem::all();
+        // $nutritionalItems = NutritionalItem::all();
+
+        return $categories;
   
         return view('admin.bread.add-edit',compact(
             'data',
@@ -96,7 +101,7 @@ class ProductController extends Controller
             'categories',
             'ingredients',
             'addableItems',
-            'nutritionalItems',
+            // 'nutritionalItems',
 
         ));
     }

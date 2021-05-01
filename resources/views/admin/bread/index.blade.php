@@ -53,6 +53,7 @@ $(document).ready(function() {
 
 
         $('#deleteBtn').click(function(e) {
+            console.log('sadfsa')
             e.preventDefault();
             $('#myTable').submit();
         })
